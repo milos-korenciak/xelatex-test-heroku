@@ -14,5 +14,12 @@ def get_index():
     btl.response.content_type = 'application/pdf'
     return btl.static_file("brano2017-02-09_buildpack.pdf", root='.')
 
+
+@btl.get("/log")
+def get_log():
+    # serve logfile
+    btl.response.content_type = 'text/plain; charset=latin9'
+    return btl.static_file("logfile.log", root='/tmp/')
+
 if __name__ == '__main__':
     btl.run(host="", port=8080, debug=True, reloader=True)
