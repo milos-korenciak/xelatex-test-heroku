@@ -8,7 +8,8 @@ app = bottle.default_app()
 @bottle.get("/")
 def get_index():
     # serve static webpage with JS
-    BIN_PATH = os.environ["BIN_PATH"]
+    print(os.environ)
+    BIN_PATH = os.environ.get("BIN_PATH", "/app/buildpack/bin/x86_64-linux/"
     os.chdir(BIN_PATH)
     subprocess.call("xelatex --shell-escape -synctex=1 -interaction=nonstopmode  brano2017-02-09_buildpack.tex", shell=True)
     bottle.response.content_type = 'application/pdf'
