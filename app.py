@@ -15,12 +15,5 @@ def get_index():
     bottle.response.content_type = 'application/pdf'
     return bottle.static_file("brano2017-02-09_buildpack.pdf", root='.')
 
-
-@bottle.get("/log")
-def get_log():
-    # serve logfile
-    bottle.response.content_type = 'text/plain; charset=latin9'
-    return bottle.static_file("logfile.log", root='/tmp/')
-
 if __name__ == '__main__':
     bottle.run(host="", port=8080, debug=True, reloader=True)
