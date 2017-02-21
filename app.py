@@ -34,6 +34,7 @@ def get_index():
 def process_tex2pdf():
     # serve static webpage with JS
     with TempDirContext() as tempdir:
+        print("I have tempdir:", tempdir)
         os.chdir(tempdir)  # we will work in tempdir
         
         with open(os.path.join(tempdir, "sample.tex"), "wb") as sample_tex:
@@ -41,13 +42,16 @@ def process_tex2pdf():
                 buf = bottle.request.body.read(4 * 2 ** 10)  # 4 kilobytes at once
                 if not buf: break
                 sample_tex.write(buf)
+        print("I have written the sample.tex")
         
         BIN_PATH = os.environ.get("BIN_PATH", "/app/buildpack/bin/x86_64-linux/")  # we search for the xelatex binary 
         XELATEX_PATH = os.path.join(BIN_PATH, "xelatex")
-
+        print("I have XELATEX_PATH", XELATEX_PATH, " BIN_PATH", BIN_PATH)
+        
         # subprocess.call(XELATEX_PATH + " --shell-escape -synctex=1 -interaction=nonstopmode sample.tex", shell=True)
         # bottle.response.content_type = 'application/pdf'
         bottle.response.content_type = 'text/plain'
+        print("returning the sample.tex")
         return bottle.static_file("sample.tex", root=tempdir)
 
 
