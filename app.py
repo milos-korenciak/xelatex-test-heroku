@@ -2,8 +2,22 @@
 import bottle
 import subprocess
 import os
+import tempfile
+import shutil
 
 app = bottle.default_app()
+
+class TempDirContext:
+    def __enter__(self):
+        # make a temp dir 
+        self.tempdir = tempfile.mkdtemp()
+        return self.tempdir
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        # remove the temp dir
+        shutil.rmtree(self.tempdir, ignore_errors=True)
+        return (exc_type is None)  # True if everything is OK
+    
 
 @bottle.get("/")
 def get_index():
@@ -14,6 +28,27 @@ def get_index():
     subprocess.call("./xelatex --shell-escape -synctex=1 -interaction=nonstopmode  brano2017-02-09_buildpack.tex", shell=True)
     bottle.response.content_type = 'application/pdf'
     return bottle.static_file("brano2017-02-09_buildpack.pdf", root='.')
+
+
+@bottle.post("/")
+def process_tex2pdf():
+    # serve static webpage with JS
+    with TempDirContext as tempdir:
+        os.chdir(tempdir)  # we will work in tempdir
+        
+        with open(os.path.join(tempdir, "sample.tex"), "wb") as sample_tex:
+            while True:  # save the .tex file
+                buf = bottle.request.body.read(4 * 2 ** 10)  # 4 kilobytes at once
+                if not buf: break
+                sample_tex.write(buf)
+        
+        BIN_PATH = os.environ.get("BIN_PATH", "/app/buildpack/bin/x86_64-linux/")  # we search for the xelatex binary 
+        XELATEX_PATH = os.path.join(BIN_PATH, "xelatex")
+
+        subprocess.call(XELATEX_PATH + " --shell-escape -synctex=1 -interaction=nonstopmode sample.tex", shell=True)
+        bottle.response.content_type = 'application/pdf'
+        return bottle.static_file("sample.pdf", root=tempdir)
+
 
 if __name__ == '__main__':
     bottle.run(host="", port=8080, debug=True, reloader=True)
