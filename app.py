@@ -33,14 +33,20 @@ def get_index():
 @bottle.post("/")
 def process_tex2pdf():
     # serve static webpage with JS
+    os.environ["TEXMFLOCAL"] = "/app/buildpack/texmf-local"
+    os.environ["TEXMFSYSCONFIG"] = "/app/buildpack/texmf-config"
+    os.environ["TEXMFSYSVAR"] = "/app/buildpack/texmf-var"
+
     with TempDirContext() as tempdir:
         print("I have tempdir:", tempdir)
-        os.chdir(tempdir)  # we will work in tempdir
+        os.environ["TEXMFVAR"] = tempdir
+        os.chdir(tempdir)
         
         with open(os.path.join(tempdir, "sample.tex"), "wb") as sample_tex:
             buf = bottle.request.body.read()
             sample_tex.write(buf)
         print("I have written the sample.tex")
+        
         
         BIN_PATH = os.environ.get("BIN_PATH", "/app/buildpack/bin/x86_64-linux/")  # we search for the xelatex binary 
         XELATEX_PATH = os.path.join(BIN_PATH, "xelatex")
