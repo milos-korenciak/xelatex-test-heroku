@@ -45,9 +45,10 @@ def process_tex2pdf():
         BIN_PATH = os.environ.get("BIN_PATH", "/app/buildpack/bin/x86_64-linux/")  # we search for the xelatex binary 
         XELATEX_PATH = os.path.join(BIN_PATH, "xelatex")
 
-        subprocess.call(XELATEX_PATH + " --shell-escape -synctex=1 -interaction=nonstopmode sample.tex", shell=True)
-        bottle.response.content_type = 'application/pdf'
-        return bottle.static_file("sample.pdf", root=tempdir)
+        # subprocess.call(XELATEX_PATH + " --shell-escape -synctex=1 -interaction=nonstopmode sample.tex", shell=True)
+        # bottle.response.content_type = 'application/pdf'
+        bottle.response.content_type = 'text/plain'
+        return bottle.static_file("sample.tex", root=tempdir)
 
 
 if __name__ == '__main__':
