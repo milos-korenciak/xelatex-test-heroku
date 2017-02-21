@@ -33,7 +33,7 @@ def get_index():
 @bottle.post("/")
 def process_tex2pdf():
     # serve static webpage with JS
-    with TempDirContext as tempdir:
+    with TempDirContext() as tempdir:
         os.chdir(tempdir)  # we will work in tempdir
         
         with open(os.path.join(tempdir, "sample.tex"), "wb") as sample_tex:
