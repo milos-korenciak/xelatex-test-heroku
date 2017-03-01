@@ -16,7 +16,7 @@ if __name__ == '__main__':
         worker = Worker(map(Queue, listen))
         worker.work()
 
-i = random.random()
-while 1:
-    print("Hello worker %s on %s!"%(i, datetime.datetime.now()))
-    time.sleep(30)
+#i = random.random()
+#while 1:
+#    print("Hello worker %s on %s!"%(i, datetime.datetime.now()))
+#    time.sleep(30)
