@@ -1,2 +1,3 @@
-bottle
-gunicorn
+bottle  # for running web
+gunicorn  #  webserver
+rq  # for running worker
