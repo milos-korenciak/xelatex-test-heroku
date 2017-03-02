@@ -13,11 +13,12 @@ def count_words_at_url(url):
     resp = requests.get(url)
     return len(resp.text.split())
 
-q = Queue(connection=conn)
+q = Queue('default', connection=conn)
 
 @bottle.get("/")
 def index():
     result = q.enqueue(count_words_at_url, 'http://heroku.com')
-    return result
+    print("result", result)
+    return str(result.__dict__)
 
 
