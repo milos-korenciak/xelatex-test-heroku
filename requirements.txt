@@ -1,3 +1,4 @@
 bottle  # for running web
 gunicorn  #  webserver
 rq  # for running worker
+requests  # for testing job
