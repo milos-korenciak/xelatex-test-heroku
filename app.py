@@ -15,6 +15,8 @@ def count_words_at_url(url):
 
 q = Queue('default', connection=conn)
 
+app = bottle.default_app()
+
 @bottle.get("/")
 def index():
     result = q.enqueue(count_words_at_url, 'http://heroku.com')
