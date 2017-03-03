@@ -50,11 +50,11 @@ class PdfCreation(DBModel):
     pdf_creation_id = pw.PrimaryKeyField()
     # user_id = pw.ForeignKeyField(InternalUser, null=True)
     datetime_ = pw.DateTimeField(index=True, default=datetime.datetime.now)
-    request_raw = CompressedField(index=True, null=True, default=None)
-    request_2nd_level = CompressedField(index=True, null=True, default=None)
-    tex_raw = CompressedField(index=True, null=True, default=None)
-    pdf_raw = CompressedField(index=True, null=True, default=None)
-    pdf_signed = CompressedField(index=True, null=True, default=None)
+    request_raw = CompressedField(null=True, default=None)
+    request_2nd_level = CompressedField(null=True, default=None)
+    tex_raw = CompressedField(null=True, default=None)
+    pdf_raw = CompressedField(null=True, default=None)
+    pdf_signed = CompressedField(null=True, default=None)
     state = pw.SmallIntegerField(index=True, default=REQUEST_RAW)  # see state constants at the beginning of the file
     locked_timestamp = pw.DateTimeField(index=True, null=True, default=datetime.datetime(1980,1,1))
 
