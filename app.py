@@ -59,7 +59,7 @@ def serve_tex2pdf_rich():
     """Enlist .tex for worker compilation to .pdf and signing"""
     task = db.PdfCreation()
     files = bottle.request.files
-    data = {k:v.read() for k, v in files.items()}
+    data = {k:v.file.read() for k, v in files.items()}
     task.tex_raw = pickle.dumps(data)
     task.locked_timestamp = datetime.datetime.now()
     task.state = db.TEX_RAW
