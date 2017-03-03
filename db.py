@@ -40,15 +40,15 @@ class DBModel(pw.Model):
     class Meta:
         """Meta class - for configuration of ORM"""
         database = database
-
-class InternalUser(DBModel):
-    pass
+#
+# class InternalUser(DBModel):
+#     pass
 
 
 class PdfCreation(DBModel):
     """The .pdf creation status table"""
     pdf_creation_id = pw.PrimaryKeyField()
-    user_id = pw.ForeignKeyField(InternalUser, null=True)
+    # user_id = pw.ForeignKeyField(InternalUser, null=True)
     datetime_ = pw.DateTimeField(index=True, default=datetime.datetime.now)
     request_raw = CompressedField(index=True, null=True, default=None)
     request_2nd_level = CompressedField(index=True, null=True, default=None)
@@ -75,7 +75,7 @@ class PdfCreation(DBModel):
 
 
 def create_all_tables(fail_silently=True):
-    InternalUser.create_table(fail_silently=fail_silently)
+    # InternalUser.create_table(fail_silently=fail_silently)
     PdfCreation.create_table(fail_silently=fail_silently)
 
 
