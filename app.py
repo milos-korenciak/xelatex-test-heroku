@@ -41,7 +41,7 @@ def process_request():
 def serve_tex2pdf():
     """Immediately try to compile .tex --> .pdf"""
     task = db.PdfCreation()
-    task.tex_raw = pickle.dumps({"sample.tex", bottle.request.body.read()})
+    task.tex_raw = pickle.dumps({"sample.tex": bottle.request.body.read()})
     task.locked_timestamp = datetime.datetime.now()
     task.state = db.TEX_RAW
     task.save()
