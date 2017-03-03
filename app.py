@@ -19,6 +19,11 @@ db.database.initialize(db.connect(os.environ.get('DATABASE_URL') or 'sqlite:///d
 db.create_all_tables()  # silently ensure we have all tables we need
 
 
+class PdfCreationException(Exception):
+    """The base class of exceptions in this app"""
+    pass
+
+
 class TempDirContext:
     """Context to create the temp dir to jail the data processed into"""
     def __enter__(self):
@@ -33,37 +38,38 @@ class TempDirContext:
 
 
 def process_request_raw_to_2nd_level(task, tempdir=None,):
-    """Transforms """
+    """Transforms raw request to request level 2"""
+    if not task.state < db.REQUEST_RAW:
+        raise PdfCreationException("Task state is not enought to perform this processing")
     if not tempdir:  # if not run in tempdir, create one
         with TempDirContext() as tempdir:
             return process_request_raw_to_2nd_level(task, tempdir,)
-    task.request_2nd_level = ""
-    task.state = "request_2nd_level"
+    task.request_2nd_level = b""
+    task.state = db.REQUEST_2ND_LEVEL
     task.save()
 
 
 def process_request_2nd_level_to_tex_raw(task, tempdir=None,):
-    """Transforms """
+    """Transforms raw request to request level 2"""
+    if not task.state < db.REQUEST_2ND_LEVEL:
+        raise PdfCreationException("Task state is not enought to perform this processing")
     if not tempdir:  # if not run in tempdir, create one
         with TempDirContext() as tempdir:
             return process_request_2nd_level_to_tex_raw(task, tempdir,)
-    task.request_2nd_level = ""
-    task.state = "request_2nd_level"
-    task.save()
-
-
-def process_pdf_raw_to_pdf_signed(task, tempdir=None,):
-    """Transforms """
-    if not tempdir:  # if not run in tempdir, create one
-        with TempDirContext() as tempdir:
-            return process_pdf_raw_to_pdf_signed(task, tempdir,)
-    task.request_2nd_level = ""
-    task.state = "request_2nd_level"
+    task.tex_raw = b""
+    task.state = db.TEX_RAW
     task.save()
 
 
 def process_tex_raw_to_pdf_raw(task, tempdir=None):
-    """Tansforms """
+    """Transforms raw request to request level 2"""
+    if not task.state < db.TEX_RAW:
+        raise PdfCreationException("Task state is not enought to perform this processing")
+    if not tempdir:  # if not run in tempdir, create one
+        with TempDirContext() as tempdir:
+            return process_tex_raw_to_pdf_raw(task, tempdir,)
+
+    print("I have tempdir: ", tempdir)
     tex_name = ""
     data = pickle.loads(task.tex_raw)
     for filename in data:
@@ -71,10 +77,6 @@ def process_tex_raw_to_pdf_raw(task, tempdir=None):
             tex_name = filename
     assert tex_name.lower().endswith(".tex"), "No *.tex file given through Task id %s, timestamp %s"%(
         task.pdf_creation_id, task.datetime)
-    if not tempdir:  # if not run in tempdir, create one
-        with TempDirContext() as tempdir:
-            return process_tex_raw_to_pdf_raw(task, tempdir)
-    print("I have tempdir: ", tempdir)
 
     os.environ["TEXMFLOCAL"] = "/app/buildpack/texmf-local"
     os.environ["TEXMFSYSCONFIG"] = "/app/buildpack/texmf-config"
@@ -91,41 +93,20 @@ def process_tex_raw_to_pdf_raw(task, tempdir=None):
 
     output_pdf_name = tex_name[:-3] + "pdf"
     task.pdf_raw = open(output_pdf_name, "rb").read()
-    task.state = "request_2nd_level"
-    task.locked_timestamp = datetime.datetime.now()
+    task.state = db.PDF_RAW
     task.save()
-    # serve output
-
-    bottle.response.content_type = 'application/pdf'
-    return bottle.static_file(output_pdf_name, root=tempdir)
 
 
-@db.database.atomic()
-def get_task():
-    """Lock the row of some not finished task."""
-    tasks = db.PdfCreation.select(  # TODO:
-            ).where((db.PdfCreation.locked_timestamp < datetime.datetime.now() - datetime.timedelta(0, 900)) |
-               (db.PdfCreation.state < 5)
-            ).order_by(db.PdfCreation.locked_timestamp).get()  # take the 1st only
-    return tasks[0] if tasks else None
-
-
-def worker():
-    """Task performing all the heavy work"""
-    # find all tasks to be done
-    while 1:
-        task = get_task()
-        if not task:
-            break
+def process_pdf_raw_to_pdf_signed(task, tempdir=None,):
+    """Transforms raw pdf to signed pdf"""
+    if not task.state < db.PDF_RAW:
+        raise PdfCreationException("Task state is not enought to perform this processing")
+    if not tempdir:  # if not run in tempdir, create one
         with TempDirContext() as tempdir:
-            if not task.request_2nd_level:
-                process_request_raw_to_2nd_level(task, tempdir)
-            if not task.tex_raw:
-                process_request_2nd_level_to_tex_raw(task, tempdir)
-            if not task.pdf_raw:
-                process_tex_raw_to_pdf_raw(task, tempdir)
-            if not task.pdf_signed:
-                process_pdf_raw_to_pdf_signed(task, tempdir)
+            return process_pdf_raw_to_pdf_signed(task, tempdir,)
+    task.pdf_signed = b""
+    task.state = db.PDF_SIGNED
+    task.save()
 
 
 ### WEB handlers
@@ -142,35 +123,55 @@ def get_index():
 
 @bottle.post("/")
 def process_request():
-    pass
+    return "You probably wanted to call /now/tex2pdf or /now/tex2pdf_rich or /enlist/tex2pdf"
 
 
 @bottle.post("/now/tex2pdf")
 def serve_tex2pdf():
     """Immediately try to compile .tex --> .pdf"""
-    with TempDirContext() as tempdir:
-        # receive the custom .tex into the tempdir
-        with open(os.path.join(tempdir, "sample.tex"), "wb") as sample_tex:
-            buf = bottle.request.body.read()
-            sample_tex.write(buf)
-        print("I have written the sample.tex")
-        task = db.PdfCreation()
-        task.tex_raw = ""
-        process_tex_raw_to_pdf_raw(task, tempdir=tempdir, tex_name="sample.tex")
-        data = pickle.loads(task.pdf_raw)  # this is dictionary "filename":"filecontent"
-        for k in data.iterkeys():
-            if k.endswith(".pdf"):
-                 return data[k]  # return filecontent of the first .pdf found
-        raise Exception("Not found any *.pdf file in process_tex_raw_to_pdf_raw output!\n"
-                        "Task id %s, timestamp %s"%(task.pdf_creation_id, task.datetime))
+    task = db.PdfCreation()
+    task.tex_raw = pickle.dumps({"sample.tex", bottle.request.body.read()})
+    task.locked_timestamp = datetime.datetime.now()
+    task.state = db.TEX_RAW
+    task.save()
+    process_tex_raw_to_pdf_raw(task)
+    data = pickle.loads(task.pdf_raw)  # this is dictionary "filename":"filecontent"
+    for k in data.iterkeys():
+        if k.endswith(".pdf"):
+             return data[k]  # return filecontent of the first .pdf found
+    raise Exception("Not found any *.pdf file in process_tex_raw_to_pdf_raw output!\n"
+                    "Task id %s, timestamp %s"%(task.pdf_creation_id, task.datetime))
+
+
+@bottle.post("/now/tex2pdf_rich")
+def serve_tex2pdf_rich():
+    """Enlist .tex for worker compilation to .pdf and signing"""
+    task = db.PdfCreation()
+    files = bottle.request.files
+    data = {k:v.read() for k, v in files.items()}
+    task.tex_raw = pickle.dumps(data)
+    task.locked_timestamp = datetime.datetime.now()
+    task.state = db.PDF_RAW
+    task.save()
+    process_tex_raw_to_pdf_raw(task)
+    data = pickle.loads(task.pdf_raw)  # this is dictionary "filename":"filecontent"
+    for k in data.iterkeys():
+        if k.endswith(".pdf"):
+            return data[k]  # return filecontent of the first .pdf found
+    raise Exception("Not found any *.pdf file in process_tex_raw_to_pdf_raw output!\n"
+                    "Task id %s, timestamp %s" % (task.pdf_creation_id, task.datetime))
+    return "Task accepted"
 
 
 @bottle.post("/enlist/tex2pdf")
-def serve_tex2pdf():
+def enlist_tex2pdf():
     """Enlist .tex for worker compilation to .pdf and signing"""
+    task = db.PdfCreation()
     files = bottle.request.files
-    data = {k:v.read() for k,v in files.items()}
-    db.PdfCreation(tex_raw=pickle.dumps(data), state="tex_raw").save()  # state = 3
+    data = {k:v.read() for k, v in files.items()}
+    task.tex_raw = pickle.dumps(data)
+    task.state = db.PDF_RAW
+    task.save()
     return "Task accepted"
 
 
