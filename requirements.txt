@@ -1,3 +1,4 @@
 bottle  # for running web
 gunicorn  #  webserver
 peewee  # ORM
+psycopg2  # core DB engine for peewee
