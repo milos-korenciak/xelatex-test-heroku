@@ -98,8 +98,8 @@ def process_tex_raw_to_pdf_raw(task, tempdir=None):
     for a, b, c in os.walk(tempdir):
         print("a, b, c", a, b, c)
 
-    output_pdf_name = tex_name[:-3] + "pdf"
-    task.pdf_raw = io.open(os.path.join(tempdir, output_pdf_name), "rb").read()
+    output_pdf_name = tex_name[:-4] + ".pdf"
+    task.pdf_raw = pickle.dumps({output_pdf_name: io.open(os.path.join(tempdir, output_pdf_name), "rb").read()})
     task.state = db.PDF_RAW
     task.save()
 
