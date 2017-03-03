@@ -15,8 +15,6 @@ import subprocess
 
 
 app = bottle.default_app()  # bottle WSGI app object
-db.database.initialize(db.connect(os.environ.get('DATABASE_URL') or 'sqlite:///default.db'))  # connect to DB
-db.create_all_tables()  # silently ensure we have all tables we need
 
 
 class PdfCreationException(Exception):
