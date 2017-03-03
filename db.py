@@ -77,16 +77,16 @@ class PdfCreation(DBModel):
 def create_all_tables(fail_silently=True):
     # InternalUser.create_table(fail_silently=fail_silently)
     PdfCreation.create_table(fail_silently=fail_silently)
+    print("ENSURED table existence!")
 
 
 # ensure all the tables are created
-create_all_tables(True)
+create_all_tables()
 
 
 if __name__ == '__main__':
     """Testing on commandline"""
     print(database.is_closed())
-    database.connect()
     create_all_tables()
     PdfCreation().save()
     obj = PdfCreation.get()
