@@ -154,7 +154,7 @@ def serve_tex2pdf_rich():
     data = {k:v.read() for k, v in files.items()}
     task.tex_raw = pickle.dumps(data)
     task.locked_timestamp = datetime.datetime.now()
-    task.state = db.PDF_RAW
+    task.state = db.TEX_RAW
     task.save()
     process_tex_raw_to_pdf_raw(task)
     data = pickle.loads(task.pdf_raw)  # this is dictionary "filename":"filecontent"
@@ -173,7 +173,7 @@ def enlist_tex2pdf():
     files = bottle.request.files
     data = {k:v.read() for k, v in files.items()}
     task.tex_raw = pickle.dumps(data)
-    task.state = db.PDF_RAW
+    task.state = db.TEX_RAW
     task.save()
     return "Task accepted"
 
