@@ -7,10 +7,9 @@ from __future__ import print_function  # Python 2 vs. 3 compatibility --> use pr
 from __future__ import division  # Python 2 vs. 3 compatibility --> / returns float
 from __future__ import unicode_literals  # Python 2 vs. 3 compatibility --> / returns float
 from __future__ import absolute_import  # Python 2 vs. 3 compatibility --> absolute imports
+from processing import *
 import db
 import time
-from app import process_request_raw_to_2nd_level, process_request_2nd_level_to_tex_raw, \
-    process_tex_raw_to_pdf_raw, process_pdf_raw_to_pdf_signed, TempDirContext, PdfCreationException
 
 
 if __name__ == '__main__':
