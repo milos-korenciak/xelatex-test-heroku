@@ -49,7 +49,7 @@ class PdfCreation(DBModel):
     """The .pdf creation status table"""
     pdf_creation_id = pw.PrimaryKeyField()
     user_id = pw.ForeignKeyField(User, null=True)
-    datetime = pw.DateTimeField(index=True, default=datetime.datetime.now)
+    datetime_ = pw.DateTimeField(index=True, default=datetime.datetime.now)
     request_raw = CompressedField(index=True, null=True, default=None)
     request_2nd_level = CompressedField(index=True, null=True, default=None)
     tex_raw = CompressedField(index=True, null=True, default=None)
