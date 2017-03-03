@@ -58,6 +58,7 @@ class PdfCreation(DBModel):
     state = pw.SmallIntegerField(index=True, default=REQUEST_RAW)  # see state constants at the beginning of the file
     locked_timestamp = pw.DateTimeField(index=True, null=True, default=datetime.datetime(1980,1,1))
 
+    @classmethod
     @database.atomic()
     def get_locked_task(self, required_state=None, task_timeout=TIMEOUT):
         """Gets the PdfCreation locked object with given state"""
