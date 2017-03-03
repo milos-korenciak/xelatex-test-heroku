@@ -63,13 +63,14 @@ class PdfCreation(DBModel):
     def get_locked_task(self, required_state=None, task_timeout=TIMEOUT):
         """Gets the PdfCreation locked object with given state"""
         timeouted_task_time = datetime.datetime.now() - task_timeout
-        task_query = PdfCreation.where((PdfCreation.locked_timestamp <= timeouted_task_time))
+        task_query = PdfCreation.select().where((PdfCreation.locked_timestamp <= timeouted_task_time))
         if required_state is not None:  # if specified, filter along required_state!
             task_query = task_query.where(PdfCreation.state == required_state)
-        task = task_query.get()
+        try:
+            task = task_query.get()
+        except pw.DoesNotExist as _:
+            return None  # if no task matches the query
 
-        if task is None:
-            return None
         task.locked_timestamp = datetime.datetime.now()
         task.save()
         return task
