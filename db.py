@@ -78,6 +78,10 @@ def create_all_tables(fail_silently=True):
     PdfCreation.create_table(fail_silently=fail_silently)
 
 
+# ensure all the tables are created
+create_all_tables()
+
+
 if __name__ == '__main__':
     """Testing on commandline"""
     print(database.is_closed())
