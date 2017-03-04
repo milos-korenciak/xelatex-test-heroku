@@ -49,7 +49,8 @@ def serve_tex2pdf():
     data = pickle.loads(task.pdf_raw)  # this is dictionary "filename":"filecontent"
     for k in data.iterkeys():
         if k.endswith(".pdf"):
-             return data[k]  # return filecontent of the first .pdf found
+            bottle.response.content_type = "application/pdf"
+            return data[k]  # return filecontent of the first .pdf found
     raise Exception("Not found any *.pdf file in process_tex_raw_to_pdf_raw output!\n"
                     "Task id %s, timestamp %s"%(task.pdf_creation_id, task.datetime))
 
@@ -105,6 +106,7 @@ def serve_tex2pdf_rich():
     data = pickle.loads(task.pdf_raw)  # this is dictionary "filename":"filecontent"
     for k in data.iterkeys():
         if k.endswith(".pdf"):
+            bottle.response.content_type = "application/pdf"
             return data[k]  # return filecontent of the first .pdf found
     raise Exception("Not found any *.pdf file in process_tex_raw_to_pdf_raw output!\n"
                     "Task id %s, timestamp %s" % (task.pdf_creation_id, task.datetime))
