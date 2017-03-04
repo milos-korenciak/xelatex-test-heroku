@@ -54,12 +54,42 @@ def serve_tex2pdf():
                     "Task id %s, timestamp %s"%(task.pdf_creation_id, task.datetime))
 
 
+
+@bottle.get("/now/tex2pdf_rich")
+def web_tex2pdf_rich():
+    """Static web for sending .tex +other files to convert to pdf"""
+    return """<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<title>Heroku .tex + images to .pdf compiler</title>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/static/jquery-ui.css">
+  <script src="/static/jquery-1.12.4.js"></script>
+  <script src="/static/jquery-ui.js"></script>
+</head>
+<body>
+
+
+<form action="/now/tex2pdf_rich" method="post" enctype="multipart/form-data">
+  tex file: <input type="file" name="sample.tex" /> <br / >
+
+  <input type="submit" /> <br / >
+</form>
+<a href="javascript: submitform()"><button id="submitButton" a type="button">Odoslať! (Submit!)</button></a>
+<script type="text/javascript">
+</script>
+</body>
+</html>"""
+
+
 @bottle.post("/now/tex2pdf_rich")
 def serve_tex2pdf_rich():
     """Enlist .tex for worker compilation to .pdf and signing"""
     task = db.PdfCreation()
     files = bottle.request.files
-    data = {k:v.file.read() for k, v in files.items()}
+    # for k, v in files.items():
+    #     print("keys", k, "value", v.__dict__)
+    data = {v.raw_filename: v.file.read() for v in files.values()}
     task.tex_raw = pickle.dumps(data)
     task.locked_timestamp = datetime.datetime.now()
     task.state = db.TEX_RAW
@@ -71,7 +101,13 @@ def serve_tex2pdf_rich():
             return data[k]  # return filecontent of the first .pdf found
     raise Exception("Not found any *.pdf file in process_tex_raw_to_pdf_raw output!\n"
                     "Task id %s, timestamp %s" % (task.pdf_creation_id, task.datetime))
-    return "Task accepted"
+# ### How to test from commandline:
+# curl  -X POST
+# -F "brano2017-02-09_buildpack.tex=@/home/l/tmp__/buildpack/bin/x86_64-linux/brano2017-02-09_buildpack.tex"
+# -F "overview_map.png=@/home/l/tmp__/buildpack/bin/x86_64-linux/overview_map.png"
+# -F "myfigure.png=@/home/l/tmp__/buildpack/bin/x86_64-linux/myfigure.png"
+# -o brano2017-02-09_buildpack.pdf
+# https://xelatex-test.herokuapp.com/now/tex2pdf_rich
 
 
 @bottle.post("/enlist/tex2pdf")
@@ -84,6 +120,13 @@ def enlist_tex2pdf():
     task.state = db.TEX_RAW
     task.save()
     return "Task accepted"
+
+
+@bottle.route('/static/<filename:path>')
+def static_files(filename):
+    if not filename.startswith("jquery"):
+        return ""
+    return bottle.static_file(filename, root='.')
 
 
 if __name__ == '__main__':
