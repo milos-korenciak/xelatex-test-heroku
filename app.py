@@ -55,11 +55,7 @@ def serve_tex2pdf():
                     "Task id %s, timestamp %s"%(task.pdf_creation_id, task.datetime))
 
 
-
-@bottle.get("/now/tex2pdf_rich")
-def web_tex2pdf_rich():
-    """Static web for sending .tex +other files to convert to pdf"""
-    return """<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+HTML_UI_TEX2PDF_RICH = """<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <title>Heroku .tex + images to .pdf compiler</title>
 <head>
@@ -71,7 +67,7 @@ def web_tex2pdf_rich():
 <body>
 
 
-<form action="/now/tex2pdf_rich" method="post" enctype="multipart/form-data">
+<form action="tex2pdf_rich" method="post" enctype="multipart/form-data">
   tex file: <input type="file" name="sample.tex" /> <br / >
   <div id="newFilesDiv">
   </div>
@@ -90,13 +86,17 @@ function addFile() {
 </html>"""
 
 
+@bottle.get("/now/tex2pdf_rich")
+def web_tex2pdf_rich():
+    """Static web for sending .tex +other files to convert to pdf"""
+    return HTML_UI_TEX2PDF_RICH
+
+
 @bottle.post("/now/tex2pdf_rich")
 def serve_tex2pdf_rich():
     """Enlist .tex for worker compilation to .pdf and signing"""
     task = db.PdfCreation()
     files = bottle.request.files
-    # for k, v in files.items():
-    #     print("keys", k, "value", v.__dict__)
     data = {v.raw_filename: v.file.read() for v in files.values()}
     task.tex_raw = pickle.dumps(data)
     task.locked_timestamp = datetime.datetime.now()
@@ -119,16 +119,33 @@ def serve_tex2pdf_rich():
 # https://xelatex-test.herokuapp.com/now/tex2pdf_rich
 
 
-@bottle.post("/enlist/tex2pdf")
+@bottle.get("/enlist/tex2pdf_rich")
+def enlist_tex2pdf_rich():
+    """Static web for sending .tex +other files to convert to pdf"""
+    return HTML_UI_TEX2PDF_RICH
+
+
+@bottle.post("/enlist/tex2pdf_rich")
 def enlist_tex2pdf():
     """Enlist .tex for worker compilation to .pdf and signing"""
     task = db.PdfCreation()
     files = bottle.request.files
-    data = {k:v.read() for k, v in files.items()}
+    data = {v.raw_filename: v.file.read() for v in files.values()}
     task.tex_raw = pickle.dumps(data)
     task.state = db.TEX_RAW
     task.save()
-    return "Task accepted"
+    return "Task id {} accepted".format(task.pdf_creation_id)
+
+
+@bottle.get("/enlist/get_state/<pdf_creation_id>")
+def get_task_state(pdf_creation_id=None):
+    """Gets sate of the requested task"""
+    try:
+        task = db.PdfCreation.get(pdf_creation_id=pdf_creation_id)
+        return str(task.state)
+    except (AttributeError, db.pw.DoesNotExist) as e:
+        print("Occured: ", e)
+        return "Such task does not exists"
 
 
 @bottle.route('/static/<filename:path>')
