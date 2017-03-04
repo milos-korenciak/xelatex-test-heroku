@@ -72,11 +72,18 @@ def web_tex2pdf_rich():
 
 <form action="/now/tex2pdf_rich" method="post" enctype="multipart/form-data">
   tex file: <input type="file" name="sample.tex" /> <br / >
-
+  <div id="newFilesDiv">
+  </div>
   <input type="submit" /> <br / >
 </form>
-<a href="javascript: submitform()"><button id="submitButton" a type="button">Odoslať! (Submit!)</button></a>
+<a href="javascript: addFile()"><button id="addFile" type="button">+++ Add new file +++</button></a>
 <script type="text/javascript">
+fileCount = 1;
+function addFile() {
+    var newFilesDiv = $("#newFilesDiv");
+    newFilesDiv.append('next file No. '+fileCount+': <input type="file" name="'+fileCount+'.dat" /> <br / >');
+    fileCount +=1;
+}
 </script>
 </body>
 </html>"""
