@@ -1,0 +1,87 @@
+\documentclass[11pt,a4paper]{article}
+% \documentclass{book}
+\usepackage[a4paper, total={8in, 9in}]{geometry}
+\usepackage{graphicx}  % for images
+\usepackage{caption}  % for subfigures / minipage image
+% \usepackage{subcaption}  % for subfigures
+\usepackage{filecontents}  % for base64 images
+% \graphicspath{ {./} } % for images
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+\usepackage{booktabs}
+\usepackage{fontspec} % to use a custom font (e.g., Roboto). To use with lualatex instead of pdflatex
+% \setmainfont{ {{main_font}} } % to be used with lualatex
+\setmainfont[Path={{main_font_path}},
+     Extension      = .ttf,
+     UprightFont    = *-Regular,
+     ItalicFont     = *-Italic,
+     BoldFont       = *-Bold,
+     BoldItalicFont = *-BoldItalic,
+     ]{{ '{' }}{{main_font}}} % ]{ {{main_font}} }
+\usepackage{lastpage} % to use the last page number in footer
+\usepackage{datetime} % to get months as a words, not numbers
+\usepackage[table,xcdraw]{xcolor} % for tables
+\usepackage{multirow} % for tables
+\usepackage{array} % for tables
+%\usepackage[italian,english]{babel} % to get some another languages later on (using \selectlanguage{italian})
+\usepackage{fancyhdr}
+\pagestyle{fancy}  % to have header and footer
+\usepackage{grffile} % to manage fancy characters in figure file names (i.e., underscores)
+
+\usepackage[hidelinks]{hyperref}  % to make clickable table of contents
+% \hypersetup{colorlinks,allcolor=black}  % to set up link colors (probably unnecessary)
+
+% polyglossia stuff:
+%\usepackage{fontspec}
+\usepackage{polyglossia}
+%\setmainlanguage{english}
+%\setotherlanguage{{ '{' }}{{language}}}
+\setmainlanguage[numerals=maghrib]{{ '{' }}{{language}}}
+%\setmainlanguage{ {{language}} }
+%{% if language != "english" %}
+\setotherlanguage{english}
+%{% endif %}
+{% if language == "arabic" %}
+%\setotherlanguage{arabic}
+\newfontfamily\arabicfont[Script=Arabic,Scale=1.1]{{ '{' }}{{arabic_font}}}
+{% endif %}
+
+% the next 5 lines are to set the figure positioning. Figures in spare pages are centered to
+% cover all the blank space. With these settings they are forced to align to the top of the page
+\makeatletter
+\setlength\@fptop{0pt}
+\setlength\@fpsep{30pt plus 0fil}
+\setlength\@fpbot{0pt}
+\makeatother
+
+\setlength{\abovetopsep}{1ex} % to set up the separation distance between the caption and the table
+
+\setlength\topmargin{-40pt} % Top margin
+\setlength\headheight{20pt} % Header height
+%\setlength\textwidth{7.0in} % Text width
+\setlength\textheight{9.5in} % Text height
+%\setlength\oddsidemargin{-30pt} % Left margin
+%\setlength\evensidemargin{-30pt} % Left margin (even pages) - only relevant with 'twoside' article option
+
+\begin{document}
+
+%{% if language == "arabic" %}
+%\begin{flushright}
+%{% endif %}
+
+{{report_header}}
+
+{{report_cover}}
+
+{% if include_contents %}
+\tableofcontents
+\newpage
+{% endif %}
+
+{{report_body}}
+
+%{% if language == "arabic" %}
+%\end{flushright}
+%{% endif %}
+
+\end{document}
+

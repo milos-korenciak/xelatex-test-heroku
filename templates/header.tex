@@ -1,0 +1,5 @@
+\fancyhf{}
+\fancyhead[R]{ {{report_type}} {% if report_title %} \newline {{report_title}} {% endif %} }
+\fancyhead[L]{\includegraphics[width=2cm]{{ '{' }}{{logo_filepath}}}} {# needed escape {{ '{' }} due to jinja error #}
+\fancyfoot[R]{\thepage / \pageref{LastPage}}
+\fancyfoot[L]{Chapter \nouppercase{\leftmark} \ {\textcopyright} Solargis, {\monthname} \the\year}

@@ -1,0 +1,7 @@
+{% if minipage_ratio != 1 -%}
+\begin{minipage}{{ '{' }}{{minipage_ratio}}\textwidth}
+{%- endif %}
+{{paragraph}}
+{% if minipage_ratio != 1 -%}
+\end{minipage}
+{%- endif %}

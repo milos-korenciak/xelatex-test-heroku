@@ -1,0 +1,15 @@
+{
+  "tables": {
+    "lta_summary": {
+      "header": ["", "{{lang.months.jan}}", "{{lang.months.feb}}", "{{lang.months.mar}}", "{{lang.months.apr}}", "{{lang.months.may}}", "{{lang.months.jun}}", "{{lang.months.jul}}", "{{lang.months.aug}}", "{{lang.months.sep}}", "{{lang.months.oct}}", "{{lang.months.nov}}", "{{lang.months.dec}}", "{{lang.months.year}}"],
+      "apply_value_colors": true,
+      "use_horizontal_lines": true,
+      "at_newpage": false
+    },
+    "info": {
+      "bold_first_column": true,
+      "use_horizontal_lines": false,
+      "column_widths": [3, 5]
+    }
+  }
+}

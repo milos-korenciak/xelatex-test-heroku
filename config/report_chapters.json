@@ -1,0 +1,168 @@
+{
+  "chapters": {
+    "site_info": [
+      {
+        "title": "{{lang.location}}"
+      },
+      {
+        "table": {
+          "type": "info",
+          "first_column": ["{{lang.location_name}}", "{{lang.lat}}", "{{lang.lon}}"],
+          "values": [["{{data.site_info.name}}"], ["{{data.site_info.lat}}"], ["{{data.site_info.lon}}"]]
+        }
+      },
+      {
+        "image": {
+          "path": "{{data.site_info.map}}",
+          "center": true,
+          "textwidth_ratio": 0.5,
+          "caption": "{{lang.location}}"
+        }
+      }
+    ],
+    "header_test": [
+      {
+        "title": "Simple header"
+      },
+      {
+        "table": {
+          "use_horizontal_lines": true,
+          "header": ["row1", "row1", "row1"],
+          "values": ["daco", "daco", "daco"],
+          "footer": ["daco", "daco", "daco"],
+          "caption": "Simple example"
+        }
+      },
+      {
+        "title": "Complex header"
+      },
+      {
+        "table": {
+          "use_horizontal_lines": true,
+          "complex_header": {
+            "columns": [[2, 3], [2, 1, 1, 1]],
+            "rows": [[2, 1], [-1, 1, 1, 1]],
+            "lines": [[[3, 5]], [[1, 5]]],
+            "content":[["{{lang.lta_table_header.month}}", "{{lang.monthly_lta_title}}"], ["daco", "{{lang.months.jan}}", "{{lang.months.feb}}", "{{lang.months.mar}}"]]
+          },
+          "values": [["daco", "daco", "daco", "daco", "daco"]],
+          "footer": ["daco", "daco", "daco", "daco", "daco"],
+          "caption": "Dummy example"
+        }
+      },
+      {
+        "table": {
+          "use_horizontal_lines": true,
+          "complex_header": {
+            "columns": [[1, 1, 1, 2, 2], [1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1]],
+            "rows": [[2, 1, 2, 1, 1, 1, 1], [-1, 1, -1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1]],
+            "lines": [[[4, 7]], [[1, 7]], [[1, 7]]],
+            "content":[
+              ["Solar irradiation", "", "Long-term average P50", "Any single year", "Estimate for 25 years"],
+              ["", "", "", "Combined uncertainty", "Minimum expected", "Combined uncertainty", "Minimum expected"],
+              ["", "", "", "[kWh/m 2 ]", "[±\\%]", "[kWh/m 2 ]", "[±\\%]", "[kWh/m 2 ]"]
+            ]
+          },
+          "values": [["Global Horizontal", "GHI", "1,928", "3.8", "1,856", "3.0", "1,870"]],
+          "caption": "Practical example"
+        }
+      },
+      {
+        "title": "Multirow header"
+      },
+      {
+        "table": {
+          "use_horizontal_lines": true,
+          "header": [["row1", "row1", "row1"], ["row2", "row2", "row2"]],
+          "values": [["daco", "daco", "daco"]],
+          "footer": ["daco", "daco", "daco"],
+          "caption": "Multirow example"
+        }
+      }
+    ],
+    "minipage_test": [
+      {
+        "title": "Minipage test"
+      },
+      {
+        "image": {
+          "minipage_ratio": 0.5,
+          "path": "{{data.site_info.map}}",
+          "center": true,
+          "textwidth_ratio": 0.5,
+          "caption": "{{lang.location}}"
+        }
+      },
+      {
+        "image": {
+          "minipage_ratio": 0.5,
+          "path": "{{data.site_info.map}}",
+          "center": true,
+          "textwidth_ratio": 1,
+          "caption": "{{lang.location}}"
+        }
+      },
+      {
+        "table": {
+          "minipage_ratio": 0.5,
+          "type": "info",
+          "first_column": ["{{lang.location_name}}", "{{lang.lat}}", "{{lang.lon}}"],
+          "values": [["{{data.site_info.name}}"], ["{{data.site_info.lat}}"], ["{{data.site_info.lon}}"]]
+        }
+      },
+      {
+        "table": {
+          "minipage_ratio": 0.5,
+          "type": "info",
+          "first_column": ["{{lang.location_name}}", "{{lang.lat}}", "{{lang.lon}}"],
+          "values": [["{{data.site_info.name}}"], ["{{data.site_info.lat}}"], ["{{data.site_info.lon}}"]]
+        }
+      },
+      {
+        "paragraph": "{{lang.data_uncertainty_content}}"
+      },
+      {
+        "paragraph": "{{lang.data_uncertainty_content}}"
+      }
+    ],
+    "ghi_sums": [
+      {
+        "title": "{{lang.ts_title.ghi}}"
+      },
+      {
+        "table": {
+          "type": "lta_summary",
+          "caption": "{{lang.lta_meaning}}",
+          "first_column": "{{data.ghi.years}}",
+          "footer": ["{{lang.lta}}", "{{data.ghi.avg[0]}}", "{{data.ghi.avg[1]}}", "{{data.ghi.avg[2]}}", "{{data.ghi.avg[3]}}", "{{data.ghi.avg[4]}}", "{{data.ghi.avg[5]}}", "{{data.ghi.avg[6]}}", "{{data.ghi.avg[7]}}", "{{data.ghi.avg[8]}}", "{{data.ghi.avg[9]}}", "{{data.ghi.avg[10]}}", "{{data.ghi.avg[11]}}", "{{data.ghi.avg[12]}}"],
+          "values": "{{data.ghi.records}}",
+          "last_column": "{{data.ghi.sums}}"
+        }
+      }
+    ],
+    "data_uncertainty": [
+      {
+        "title": "{{lang.data_uncertainty}}"
+      },
+      {
+        "paragraph": "{{lang.data_uncertainty_content}}"
+      }
+    ],
+    "mode_of_use": [
+      {
+        "title": "{{lang.mode_of_use}}"
+      },
+      {
+        "paragraph": "{{lang.mode_of_use_content}}"
+      }
+    ],
+    "disclaimer": [
+      {
+        "title": "{{lang.disclaimer_legal}}"
+      },
+      {
+        "paragraph": "{{lang.disclaimer_legal_content}}"
+      }
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "lang_dir": "/var/www/applications/sg2_reports/lang",
+  "report_cfg_test": "/var/www/applications/sg2_reports/config/neptun_report_all.json",
+  "report_cfg": [
+    "/var/www/applications/sg2_reports/config/neptun_report_settings.json",
+    "/var/www/applications/sg2_reports/config/report_types.json",
+    "/var/www/applications/sg2_reports/config/report_chapters.json",
+    "/var/www/applications/sg2_reports/config/report_tables.json"
+  ],
+  "templates": {
+    "report": "/var/www/applications/sg2_reports/templates/report.tex",
+    "header": "/var/www/applications/sg2_reports/templates/header.tex",
+    "cover": "/var/www/applications/sg2_reports/templates/cover.tex",
+    "title": "/var/www/applications/sg2_reports/templates/chapter_title.tex",
+    "paragraph": "/var/www/applications/sg2_reports/templates/paragraph.tex",
+    "table": "/var/www/applications/sg2_reports/templates/table.tex",
+    "image": "/var/www/applications/sg2_reports/templates/image.tex"
+  }
+}

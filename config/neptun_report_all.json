@@ -1,0 +1,163 @@
+{
+  "chapters": {
+    "data_uncertainty": [
+      {
+        "title": "{{lang.data_uncertainty}}"
+      },
+      {
+        "paragraph": "{{lang.data_uncertainty_content}}"
+      }
+    ],
+    "disclaimer": [
+      {
+        "title": "{{lang.disclaimer_legal}}"
+      },
+      {
+        "paragraph": "{{lang.disclaimer_legal_content}}"
+      }
+    ],
+    "mode_of_use": [
+      {
+        "title": "{{lang.mode_of_use}}"
+      },
+      {
+        "paragraph": "{{lang.mode_of_use_content}}"
+      }
+    ],
+    "site_info": [
+      {
+        "title": "{{lang.location}}"
+      },
+      {
+        "table": {
+          "bold_first_column": true,
+          "column_widths": [
+            3,
+            5
+          ],
+          "first_column": [
+            "{{lang.location_name}}",
+            "{{lang.lat}}",
+            "{{lang.lon}}"
+          ],
+          "use_horizontal_lines": false,
+          "values": [
+            [
+              "{{data.site_info.name}}"
+            ],
+            [
+              "{{data.site_info.lat}}"
+            ],
+            [
+              "{{data.site_info.lon}}"
+            ]
+          ]
+        }
+      },
+      {
+        "image": {
+          "center": true,
+          "path": "{{data.site_info.map}}",
+          "textwidth_ratio": 0.5
+        }
+      }
+    ]
+  },
+  "settings": {
+    "font": "Roboto",
+    "include_contents": true,
+    "include_cover": true,
+    "language": "french"
+  },
+  "types": {
+    "PVplanner": {
+      "chapters": [
+        [
+          {
+            "title": "{{lang.location}}"
+          },
+          {
+            "table": {
+              "bold_first_column": true,
+              "column_widths": [
+                3,
+                5
+              ],
+              "first_column": [
+                "{{lang.location_name}}",
+                "{{lang.lat}}",
+                "{{lang.lon}}"
+              ],
+              "use_horizontal_lines": false,
+              "values": [
+                [
+                  "{{data.site_info.name}}"
+                ],
+                [
+                  "{{data.site_info.lat}}"
+                ],
+                [
+                  "{{data.site_info.lon}}"
+                ]
+              ]
+            }
+          },
+          {
+            "image": {
+              "center": true,
+              "path": "{{data.site_info.map}}",
+              "textwidth_ratio": 0.5
+            }
+          }
+        ],
+        [
+          {
+            "title": "{{lang.mode_of_use}}"
+          },
+          {
+            "paragraph": "{{lang.mode_of_use_content}}"
+          }
+        ],
+        [
+          {
+            "title": "{{lang.disclaimer_legal}}"
+          },
+          {
+            "paragraph": "{{lang.disclaimer_legal_content}}"
+          }
+        ],
+        [
+          {
+            "title": "{{lang.data_uncertainty}}"
+          },
+          {
+            "paragraph": "{{lang.data_uncertainty_content}}"
+          }
+        ]
+      ],
+      "cover": {
+        "report_title": "Solargis PVplanner report"
+      },
+      "header": {
+        "report_type": "PVplanner"
+      },
+      "settings": {
+        "include_contents": true,
+        "include_cover": true
+      }
+    },
+    "iMaps": {
+      "chapters": [
+        "site_info",
+        "disclaimer"
+      ],
+      "header": {
+        "report_type": "iMaps"
+      },
+      "settings": {
+        "include_contents": false,
+        "include_cover": false
+      }
+    }
+  }
+}

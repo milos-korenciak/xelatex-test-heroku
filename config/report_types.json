@@ -1,0 +1,47 @@
+{
+  "types": {
+    "iMaps": {
+      "settings": {
+        "include_contents": false,
+        "include_cover": false
+      },
+      "header": {
+        "report_type": "iMaps"
+      },
+      "chapters": [
+        "site_info",
+        "disclaimer"
+      ]
+    },
+    "PVplanner": {
+      "settings": {
+        "include_contents": true
+      },
+      "cover": {
+        "report_title": "Solargis PVplanner report"
+      },
+      "header": {
+        "report_type": "PVplanner"
+      },
+      "chapters": [
+        "site_info",
+        "ghi_sums",
+        "mode_of_use",
+        "disclaimer",
+        "data_uncertainty"
+      ]
+    },
+    "test": {
+      "settings": {
+        "include_contents": false,
+        "include_cover": false
+      },
+      "header": {
+        "report_type": "test"
+      },
+      "chapters": [
+        "header_test"
+      ]
+    }
+  }
+}

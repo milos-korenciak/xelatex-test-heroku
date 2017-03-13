@@ -1,0 +1,13 @@
+{
+  "settings": {
+    "font": "Roboto",
+    "include_contents": true,
+    "include_cover": true,
+    "table_header_color": "EFEFEF",
+    "table_footer_color": "EFEFEF",
+    "table_value_colors": ["3A52bA", "62B0C3", "77E16A", "E9F949", "FFD62B", "FA8C21", "F2413D"],
+    "header": {
+      "logo_filepath": "/var/www/applications/sg2_reports/Solargis-noR-RGB.png"
+    }
+  }
+}

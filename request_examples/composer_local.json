@@ -1,0 +1,13 @@
+{
+  "config": "config/config_paths.json",
+  "data": {
+    "site_info": {
+      "lat": 33.951904,
+      "lon": -6.804657,
+      "map": "overview_map.jpg",
+      "name": "Souissi"
+    }
+  },
+  "language": "english",
+  "report_type": "pvplanner"
+}

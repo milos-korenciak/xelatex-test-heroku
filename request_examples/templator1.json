@@ -1,0 +1,88 @@
+{
+  "chapters": [
+    [
+      {
+        "title": "Location"
+      },
+      {
+        "table": {
+          "bold_first_column": true,
+          "column_widths": [
+            3,
+            5
+          ],
+          "first_column": [
+            "Location name:",
+            "Latitude:",
+            "Longitude:"
+          ],
+          "use_horizontal_lines": false,
+          "values": [
+            [
+              "Souissi"
+            ],
+            [
+              "33.951904"
+            ],
+            [
+              "-6.804657"
+            ]
+          ]
+        }
+      },
+      {
+        "image": {
+          "center": true,
+          "path": "/var/www/applications/sg2_reports/overview_map.jpg",
+          "textwidth_ratio": 0.5
+        }
+      }
+    ],
+    [
+      {
+        "title": "Mode of Use"
+      },
+      {
+        "paragraph": "Solar resource, air temperature, photovoltaic power production (PVOUT) data and maps available in the Atlas serve as an indicator, which helps to understand solar power potential in Morocco, thus it is a useful tool for site selection and preliminary evaluation. PVOUT represents solar power estimate in the start-up phase of a PV system. The estimates are accurate enough for small and medium-size PV systems with pannels oriented to the south at optimum angle which is indicated in the GTI configuration. For planning and financing of large projects, more information is needed: 1. Detailed specification of a PV system, 2. PV simulation based on multiyear historical time series or at least TMY data, 3. Interannual variability and P90 uncertainty of the PV production, 4. Lifetime energy production considering performance degradation of PV components. More information about full PV yield assessment can be found at https://solaratlas.masen.ma/about#how-to-use."
+      }
+    ],
+    [
+      {
+        "title": "Disclaimer and legal information"
+      },
+      {
+        "paragraph": "Considering the uncertainty of data and calculations, Solargis does not guarantee the accuracy of estimates. The maximum possible has been done for the assessment of weather parameters based on the best available data, software and knowledge. Solargis nor MASEN shall not be liable for any direct, incidental, consequential, indirect or punitive damages arising or alleged to have arisen out of use of the provided report. This report is copyright to Solargis. All rights reserved."
+      }
+    ],
+    [
+      {
+        "title": "Data Uncertainty"
+      },
+      {
+        "paragraph": "In Morocco, the uncertainty of the yearly outputs of the original Solargis model is as follows: Global Horizontal Irradiation ±4.0%, Direct Normal Irradiation ±9.0%, Global Tilted Irradiation ±5.0%. Uncertainty of yearly air temperature for the majority of analysed ground stations is estimated at ±1.0ºC. However the uncertainty of air temperature can reach values as high as _4.0ºC in a complex terrain, such as the foothills of High Atlas Mountains. Uncertainty of yearly expected photovoltaic power production data is approx. ±6.5%. More information about the data uncertainty can be found at https://solaratlas.masen.ma/about#solargis_data."
+      }
+    ]
+  ],
+  "cover": {
+    "report_title": "Solargis PVplanner report"
+  },
+  "header": {
+    "logo_filepath": "/var/www/applications/sg2_reports/Solargis-noR-RGB.png",
+    "report_type": "PVplanner"
+  },
+  "settings": {
+    "font": "Roboto",
+    "include_contents": true,
+    "include_cover": true,
+    "language": "english"
+  },
+  "templates": {
+    "cover": "/var/www/applications/sg2_reports/templates/cover.tex",
+    "header": "/var/www/applications/sg2_reports/templates/header.tex",
+    "image": "/var/www/applications/sg2_reports/templates/image.tex",
+    "paragraph": "/var/www/applications/sg2_reports/templates/paragraph.tex",
+    "report": "/var/www/applications/sg2_reports/templates/report.tex",
+    "table": "/var/www/applications/sg2_reports/templates/table.tex",
+    "title": "/var/www/applications/sg2_reports/templates/chapter_title.tex"
+  }
+}

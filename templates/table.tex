@@ -1,0 +1,88 @@
+{% if minipage_ratio != 1 -%}
+\begin{minipage}{{ '{' }}{{minipage_ratio}}\textwidth}
+{%- endif %}
+
+{% if at_newpage -%}
+\newpage
+{%- endif %}
+
+%\begin{table}[h!]
+\begin{tabular} { {{columns}} }
+{% if use_horizontal_lines %} \hline {% endif %}
+
+%{% if header is not none%}
+%{% for i in range(0,header_shape[0]) %}
+%\rowcolor[HTML]{ {{color_header}} }
+%\textbf{ {{header[i][0]}} }
+%{% for hd in header[i][1:] %}
+%& \textbf{ {{hd}} }
+%{% endfor %} \\ {% if use_horizontal_lines %} \hline {% endif %}
+%{% endfor %}
+%{% endif %}
+
+{% if header is not none %}
+{% for i in range(0,header_shape[0]) %}
+\rowcolor[HTML]{ {{color_header}} }
+\textbf{{ '{' }}{{header[i][0]}}}
+{% for j in range(1,header_shape[1]) %}
+& \textbf{{ '{' }}{{header[i][j]}}}
+{% endfor %}
+\\ {% if use_horizontal_lines %} \hline {% endif %}
+{% endfor %}
+{% endif %}
+
+{% if complex_header is not none %}
+{% for i in range(0, complex_header.columns|length) %}
+\rowcolor[HTML]{ {{color_header}} }
+{% for j in range(0, complex_header.columns[i]|length) %}
+{% if complex_header.rows[i][j] == -1 %}
+\multicolumn{ {{complex_header.columns[i][j]}} }{l}{}
+{% else %}
+\multicolumn{ {{complex_header.columns[i][j]}} }{l}{\multirow{ {{complex_header.rows[i][j]}} }{*}{\textbf{ {{complex_header.content[i][j]}} }}}
+{% endif %}
+{% if j != complex_header.columns[i]|length - 1 %} & {% endif %}
+{% endfor %} \\
+{% if use_horizontal_lines and 'lines' in complex_header %}
+{% for line in complex_header.lines[i] %}
+\cline{ {{line[0]}}-{{line[1]}} }
+{% endfor %}
+{% elif use_horizontal_lines %}
+\hline
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if values is not none %}
+{% for i in range(0,values_shape[0]) %}
+{% if first_column is not none %}
+{% if bold_first_column %} \textbf{ {{first_column[i]}} } & {% else %} {{first_column[i]}} & {% endif %}
+{% endif %}
+\cellcolor[HTML]{ {{color_values[i][0]}} } {{values[i][0]}}
+{% for j in range(1,values_shape[1]) %} & \cellcolor[HTML]{ {{color_values[i][j]}} } {{values[i][j]}} {% endfor %}
+{% if last_column is not none %}
+{% if bold_last_column %} & \textbf{ {{last_column[i]}} } {% else %} & {{last_column[i]}} {% endif %}
+{% endif %}
+\\ {% if use_horizontal_lines %} \hline {% endif %}
+{% endfor %}
+{% endif %}
+{% if footer is not none%}
+\rowcolor[HTML]{ {{color_footer}} }
+\textbf{ {{footer[0]}} }
+{% for ft in footer[1:] %}
+& \textbf{ {{ft}} }
+{% endfor %}
+\\ {% if use_horizontal_lines %} \hline {% endif %}
+{% endif %}
+\end{tabular}
+
+{% if caption %}
+\captionof{table}{ {{caption}} }
+%\caption{ {{caption}} }
+%\label{ {{label}} }
+{% endif %}
+
+%\end{table}
+
+{% if minipage_ratio != 1 -%}
+\end{minipage}
+{%- endif %}

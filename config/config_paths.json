@@ -1,0 +1,24 @@
+{
+  "lang_dir": "lang",
+  "report_cfg_test": "config/report_all.json",
+  "report_cfg": [
+    "config/report_settings.json",
+    "config/report_types.json",
+    "config/report_chapters.json",
+    "config/report_tables.json"
+  ],
+  "templates": {
+    "report": "templates/report.tex",
+    "header": "templates/header.tex",
+    "cover": "templates/cover.tex",
+    "title": "templates/chapter_title.tex",
+    "paragraph": "templates/paragraph.tex",
+    "table": "templates/table.tex",
+    "image": "templates/image.tex"
+  },
+  "latex_lang": {
+    "en": "english",
+    "fr": "french",
+    "ar": "arabic"
+  }
+}

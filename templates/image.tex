@@ -1,0 +1,47 @@
+{% if minipage_ratio != 1 -%}
+\begin{minipage}{{ '{' }}{{minipage_ratio}}\textwidth}
+{%- endif %}
+
+% inspired by this: http://tex.stackexchange.com/questions/6850/table-and-figure-side-by-side-with-independent-captions
+
+%{% if wrap_figure %}
+%\begin{wrapfigure}{{ '{' }}{{wrap_figure}}}{{ '{' }}{{textwidth_ratio}}\textwidth}
+%{% else %}
+%\begin{figure}[h]
+%{% endif %}
+%{% if center %}
+%\centering
+%{% endif %}
+
+%{% if minipage_ratio != 1 %}
+%\begin{minipage}{{ '{' }}{{minipage_ratio}}\textwidth}
+%{% endif %}
+
+{% if textwidth_ratio %}
+\includegraphics[width={{textwidth_ratio}}\textwidth]{{ '{' }}{{image_path}}}
+{% else %}
+\includegraphics{{ '{' }}{{image_path}}}
+{% endif %}
+{% if caption %}
+{% if textwidth_ratio %}
+%\caption[width={{textwidth_ratio}}\textwidth]{{ '{' }}{{caption}}}  % THIS DOESN'T WORK WELL!
+\captionof{figure}[width={{textwidth_ratio}}\textwidth]{{ '{' }}{{caption}}}  % THIS DOESN'T WORK WELL!
+{% else %}
+%\caption{ {{caption}} }
+\captionof{figure}{ {{caption}} }
+{% endif %}
+{% endif %}
+
+%{% if minipage_ratio != 1 %}
+%\end{minipage}
+%{% endif %}
+
+%{% if wrap_figure %}
+%\end{wrapfigure}
+%{% else %}
+%\end{figure}
+%{% endif %}
+
+{% if minipage_ratio != 1 %}
+\end{minipage}
+{% endif %}
