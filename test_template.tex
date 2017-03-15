@@ -1,0 +1,53 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[a4paper]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{fontspec} % to use a custom font (e.g., Roboto). To use with lualatex instead of pdflatex
+\setmainfont{Roboto}
+\usepackage{lastpage} % to use the last page number in footer
+\usepackage{datetime} % to get months as a words, not numbers
+%\usepackage[italian,english]{babel} % to get some another languages later on (using \selectlanguage{italian})
+\usepackage{fancyhdr}
+\pagestyle{fancy}  % to have header and footer
+\usepackage{grffile} % to manage fancy characters in figure file names (i.e., underscores)
+
+% the next 5 lines are to set the figure positioning. Figures in spare pages are centered to
+% cover all the blank space. With these settings they are forced to align to the top of the page
+\makeatletter
+\setlength\@fptop{0pt} 
+\setlength\@fpsep{30pt plus 0fil} 
+\setlength\@fpbot{0pt}
+\makeatother
+
+\setlength{\abovetopsep}{1ex} % to set up the separation distance between the caption and the table
+
+\setlength\topmargin{-40pt} % Top margin
+\setlength\headheight{20pt} % Header height
+%\setlength\textwidth{7.0in} % Text width
+\setlength\textheight{9.5in} % Text height
+%\setlength\oddsidemargin{-30pt} % Left margin
+%\setlength\evensidemargin{-30pt} % Left margin (even pages) - only relevant with 'twoside' article option
+
+\fancyhf{}
+\fancyhead[R]{climData}
+\fancyhead[L]{\includegraphics[width=2cm]{${logo_filepath}}}
+\fancyfoot[R]{\thepage / \pageref{LastPage}}
+\fancyfoot[L]{Chapter \nouppercase{\leftmark} \\ {\textcopyright} Solargis, {\monthname} \the\year}
+
+%opening
+\title{Solargis$$^{\textcopyright}$$ Report}
+\author{Solargis\texttrademark  s.r.o}
+
+\begin{document}
+
+\maketitle
+\textsc{\LARGE University Name}\\[1.5cm]
+\thispagestyle{empty}
+
+\newpage
+\setcounter{page}{1}
+
+\section{Forecasting methodology and assessment details}
+The Solargis\texttrademark forecasting technology comprises various cutting-edge methodologies to predict solar radiation and other meteorological variables. Our technology provides worldwide forecasting solutions for time horizons ranging from few minutes up to 10 days ahead with sub-hourly resolution and several updates a day. From 10 minutes to 6 hours ahead, the solar radiation prediction is performed based on both time casting of near-real-time satellite-derived images and numerical weather prediction (NWP) models. For time horizons beyond 6 hours, NWP models are the only current method providing reliable estimates.
+
+\end{document}
