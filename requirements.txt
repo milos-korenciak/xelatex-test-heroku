@@ -2,3 +2,5 @@ bottle  # for running web
 gunicorn  #  webserver
 peewee  # ORM
 psycopg2  # core DB engine for peewee
+jinja2  # for .tex creation templates
+numpy  # for .tex creation templates
