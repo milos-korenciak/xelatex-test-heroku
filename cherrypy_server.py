@@ -6,9 +6,6 @@ import report_utils
 import traceback
 
 
-cherrypy.config.update({'environment': 'embedded'})
-SERVER_ALIAS = "/reports"
-
 # @cherrypy.expose
 class Root(object):
     exposed = True
@@ -91,40 +88,3 @@ class ReportTemplatorService(object):
             cherrypy.response.status = "500 - Internal Server Error"
             return "Something went wrong, see the traceback message:\n{}".format(traceback.format_exc())
     POST.exposed = True
-
-
-# if __name__ == '__main__':
-conf = {
-    '/': {
-        'request.dispatch': cherrypy.dispatch.MethodDispatcher(),
-        'tools.sessions.on': True,
-        'tools.response_headers.on': True,
-        'tools.response_headers.headers': [('Content-Type', 'text/plain')],
-    }
-}
-# conf = None
-# cherrypy.quickstart(ReportGeneratorWebService(), '/', conf)
-# print 'import test'
-cherrypy.tree.mount(Root(), script_name=SERVER_ALIAS + '/', config=None)
-cherrypy.tree.mount(ReportComposerService(), script_name=SERVER_ALIAS + '/composer', config=conf)
-cherrypy.tree.mount(ReportTemplatorService(), script_name=SERVER_ALIAS + '/templator', config=conf)
-
-# server = cherrypy._cpserver.Server()
-# server.socket_port = 8030
-
-if __name__ == '__main__':  # for local testing
-    cherrypy.server.unsubscribe()  # very important gets rid of default.
-    # server = cherrypy._cpserver.Server()
-    # server.socket_port = 8030
-    cherrypy.engine.exit()
-    cherrypy.engine.start()
-    cherrypy.engine.block()
-
-else:  # for apache wsgi_mod
-    # if cherrypy.__version__.startswith('3.0') and cherrypy.engine.state == 0:
-    if cherrypy.engine.state == 0:
-        cherrypy.engine.start(blocking=False)
-        atexit.register(cherrypy.engine.stop)
-
-    # set required variable name for WSGI:
-    application = cherrypy.tree
