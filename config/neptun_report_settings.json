@@ -3,11 +3,36 @@
     "font": "Roboto",
     "include_contents": true,
     "include_cover": true,
-    "table_header_color": "EFEFEF",
-    "table_footer_color": "EFEFEF",
-    "table_value_colors": ["3A52bA", "62B0C3", "77E16A", "E9F949", "FFD62B", "FA8C21", "F2413D"],
     "header": {
-      "logo_filepath": "/var/www/applications/sg2_reports/Solargis-noR-RGB.png"
+      "logo_filepath": "/var/www/applications/sg2_reports/pics/Solargis-noR-RGB.png"
+    },
+    "table": {
+      "color_header": "EFEFEF",
+      "color_footer": "EFEFEF",
+      "value_color_ramp": ["3A52bA", "62B0C3", "77E16A", "E9F949", "FFD62B", "FA8C21", "F2413D"]
+    },
+    "wms_map": {
+      "url": "http://neptun/wms",
+      "service": "WMS",
+      "request": "GetPrint",
+      "version": "1.3.0",
+      "format": "image/png",
+      "legend": "per_layer",
+      "discrete": false,
+      "interpolation": "nearest",
+      "crs": "EPSG:4326",
+      "exact_legend_size": "false",
+      "background_layers": "countries,coast,oceans,waters,rivers,grid,cities",
+      "background_opacity": 100,
+      "watermarks": 0,
+      "dpi": 300,
+      "positions": "legend:br,logo:tl,scalebar:bl",
+      "general_offset": null,
+      "add_offsets": "legend:(0,0),logo:(0,0),scalebar:(0,0)"
+    },
+    "grey_map": {
+      "url": "http://109.71.69.229/py-services/countryMapProvider/get",
+      "whratio": 1
     }
   }
 }

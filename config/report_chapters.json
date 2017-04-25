@@ -20,6 +20,61 @@
         }
       }
     ],
+    "site_info_wms": [
+      {
+        "title": "{{lang.location}}"
+      },
+      {
+        "table": {
+          "type": "info",
+          "first_column": ["{{lang.location_name}}", "{{lang.lat}}", "{{lang.lon}}"],
+          "values": [["{{data.site_info.name}}"], ["{{data.site_info.lat}}"], ["{{data.site_info.lon}}"]]
+        }
+      },
+      {
+        "image": {
+          "center": true,
+          "textwidth_ratio": 0.5,
+          "caption": "{{lang.location}}",
+          "wms_map": {
+            "type": "site_overview",
+            "bbox": "{{data.site_info.bbox}}"
+          }
+        }
+      }
+    ],
+    "map_test": [
+      {
+        "title": "{{lang.location}}"
+      },
+      {
+        "table": {
+          "type": "info",
+          "first_column": ["{{lang.location_name}}", "{{lang.lat}}", "{{lang.lon}}"],
+          "values": [["{{data.site_info.name}}"], ["{{data.site_info.lat}}"], ["{{data.site_info.lon}}"]]
+        }
+      },
+      {
+        "image": {
+          "center": true,
+          "textwidth_ratio": 0.5,
+          "caption": "{{lang.location}}",
+          "wms_map": {
+            "type": "site_overview"
+          }
+        }
+      },
+      {
+        "image": {
+          "center": true,
+          "textwidth_ratio": 0.5,
+          "caption": "{{lang.location}}",
+          "grey_map": {
+            "type": "site_location"
+          }
+        }
+      }
+    ],
     "header_test": [
       {
         "title": "Simple header"

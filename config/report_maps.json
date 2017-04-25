@@ -1,0 +1,23 @@
+{
+  "wms_maps": {
+    "site_overview": {
+      "layers": "GHI_global_yearly",
+      "bbox": "{{data.site_info.bbox}}",
+      "width": 640,
+      "height": 580,
+      "legend_style": "horizontal",
+      "legend_title": null,
+      "scalebar_size": "default",
+      "logo_size": null,
+      "markers": ["{{data.site_info.lat}}", "{{data.site_info.lon}}", "{{data.site_info.name}}"],
+      "background_layers": "countries,coast,oceans,waters,rivers,grid,cities"
+    }
+  },
+  "grey_maps": {
+    "site_location": {
+      "lat": "{{data.site_info.lat}}",
+      "lon": "{{data.site_info.lon}}",
+      "countryCode": "{{data.site_info.cntry_code}}"
+    }
+  }
+}

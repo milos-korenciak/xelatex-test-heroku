@@ -31,6 +31,24 @@
         "data_uncertainty"
       ]
     },
+    "PVplanner_wms": {
+      "settings": {
+        "include_contents": true
+      },
+      "cover": {
+        "report_title": "Solargis PVplanner report"
+      },
+      "header": {
+        "report_type": "PVplanner"
+      },
+      "chapters": [
+        "site_info_wms",
+        "ghi_sums",
+        "mode_of_use",
+        "disclaimer",
+        "data_uncertainty"
+      ]
+    },
     "test": {
       "settings": {
         "include_contents": false,
@@ -40,7 +58,7 @@
         "report_type": "test"
       },
       "chapters": [
-        "header_test"
+        "map_test"
       ]
     }
   }

@@ -5,7 +5,8 @@
     "/var/www/applications/sg2_reports/config/neptun_report_settings.json",
     "/var/www/applications/sg2_reports/config/report_types.json",
     "/var/www/applications/sg2_reports/config/report_chapters.json",
-    "/var/www/applications/sg2_reports/config/report_tables.json"
+    "/var/www/applications/sg2_reports/config/report_tables.json",
+    "/var/www/applications/sg2_reports/config/report_maps.json"
   ],
   "templates": {
     "report": "/var/www/applications/sg2_reports/templates/report.tex",

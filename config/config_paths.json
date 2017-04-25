@@ -5,7 +5,8 @@
     "config/report_settings.json",
     "config/report_types.json",
     "config/report_chapters.json",
-    "config/report_tables.json"
+    "config/report_tables.json",
+    "config/report_maps.json"
   ],
   "templates": {
     "report": "templates/report.tex",

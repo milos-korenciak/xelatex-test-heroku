@@ -33,7 +33,7 @@
       {
         "image": {
           "center": true,
-          "path": "/var/www/applications/sg2_reports/overview_map.jpg",
+          "path": "/var/www/applications/sg2_reports/pics/overview_map.jpg",
           "textwidth_ratio": 0.5
         }
       }
@@ -67,7 +67,7 @@
     "report_title": "Solargis PVplanner report"
   },
   "header": {
-    "logo_filepath": "/var/www/applications/sg2_reports/Solargis-noR-RGB.png",
+    "logo_filepath": "/var/www/applications/sg2_reports/pics/Solargis-noR-RGB.png",
     "report_type": "PVplanner"
   },
   "settings": {

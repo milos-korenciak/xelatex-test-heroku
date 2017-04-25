@@ -1,11 +1,35 @@
 {
-  "config": "config/config_paths.json",
+  "config": {
+    "lang_dir": "/var/www/applications/sg2_reports/lang",
+    "latex_lang": {
+      "ar": "arabic",
+      "en": "english",
+      "fr": "french"
+    },
+    "report_cfg": [
+      "/var/www/applications/sg2_reports/config/neptun_report_settings.json",
+      "/var/www/applications/sg2_reports/config/report_types.json",
+      "/var/www/applications/sg2_reports/config/report_chapters.json",
+      "/var/www/applications/sg2_reports/config/report_tables.json",
+      "/var/www/applications/sg2_reports/config/report_maps.json"
+    ],
+    "report_cfg_test": "/var/www/applications/sg2_reports/config/neptun_report_all.json",
+    "templates": {
+      "cover": "/var/www/applications/sg2_reports/templates/cover.tex",
+      "header": "/var/www/applications/sg2_reports/templates/header.tex",
+      "image": "/var/www/applications/sg2_reports/templates/image.tex",
+      "paragraph": "/var/www/applications/sg2_reports/templates/paragraph.tex",
+      "report": "/var/www/applications/sg2_reports/templates/report.tex",
+      "table": "/var/www/applications/sg2_reports/templates/table.tex",
+      "title": "/var/www/applications/sg2_reports/templates/chapter_title.tex"
+    }
+  },
   "data": {
     "site_info": {
       "lat": 33.951904,
       "lon": -6.804657,
-      "map": "pics/overview_map.jpg",
-      "name": "Souissi"
+      "name": "Souissi",
+      "bbox": [21.09375,-18.046417236328125,36.9140625,-0.028839111328125]
     },
     "ghi": {
       "avg": [162,178,162,150,154,151,158,161,156,161,152,158,1909],
@@ -38,6 +62,6 @@
       "years": [1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016]
     }
   },
-  "language": "english",
-  "report_type": "pvplanner"
+  "language": "french",
+  "report_type": "pvplanner_wms"
 }

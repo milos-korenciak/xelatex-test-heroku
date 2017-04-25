@@ -4,8 +4,8 @@
     "site_info": {
       "lat": 33.951904,
       "lon": -6.804657,
-      "map": "pics/overview_map.jpg",
-      "name": "Souissi"
+      "name": "Souissi",
+      "bbox": [21.09375,-18.046417236328125,36.9140625,-0.028839111328125]
     },
     "ghi": {
       "avg": [162,178,162,150,154,151,158,161,156,161,152,158,1909],
@@ -39,5 +39,5 @@
     }
   },
   "language": "english",
-  "report_type": "pvplanner"
+  "report_type": "pvplanner_wms"
 }

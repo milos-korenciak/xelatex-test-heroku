@@ -1,0 +1,547 @@
+{
+  "chapters": [
+    [
+      {
+        "title": "Location"
+      },
+      {
+        "table": {
+          "bold_first_column": true,
+          "column_widths": [
+            3,
+            5
+          ],
+          "first_column": [
+            "Location name:",
+            "Latitude:",
+            "Longitude:"
+          ],
+          "type": "info",
+          "use_horizontal_lines": false,
+          "values": [
+            [
+              "Souissi"
+            ],
+            [
+              "33.951904"
+            ],
+            [
+              "-6.804657"
+            ]
+          ]
+        }
+      },
+      {
+        "image": {
+          "caption": "Location",
+          "center": true,
+          "textwidth_ratio": 0.5,
+          "wms_map": {
+            "type": "site_overview",
+            "bbox": [21.09375,-18.046417236328125,36.9140625,-0.028839111328125],
+            "layers": "GHI_global_yearly",
+            "width": 640,
+            "height": 580,
+            "legend_style": "horizontal",
+            "legend_title": null,
+            "scalebar_size": "default",
+            "logo_size": "default",
+            "markers": [33.951904, -6.804657, "Souissi"],
+            "url": "http://neptun/wms",
+            "service": "WMS",
+            "request": "GetPrint",
+            "version": "1.3.0",
+            "format": "image/png",
+            "legend": "per_layer",
+            "discrete": false,
+           "interpolation": "nearest",
+            "crs": "EPSG:4326",
+            "exact_legend_size": "false",
+            "background_layers": "countries,coast,oceans,waters,rivers,grid,cities",
+            "background_opacity": 100,
+            "watermarks": 0,
+            "dpi": 300,
+            "positions": "legend:br,logo:tl,scalebar:bl",
+            "general_offset": null,
+            "add_offsets": "legend:(0,0),logo:(0,0),scalebar:(0,0)"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "title": "Global horizontal irradiation: Monthly and yearly sums"
+      },
+      {
+        "table": {
+          "apply_value_colors": true,
+          "at_newpage": false,
+          "caption": "LTA - Long-term average. Interannual variability is given by one standard deviation (STDEV) of mean (white: normal years, red or blue: extreme years), yearly STDEV is ",
+          "first_column": [
+            1994,
+            1995,
+            1996,
+            1997,
+            1998,
+            1999,
+            2000,
+            2001,
+            2002,
+            2003,
+            2004,
+            2005,
+            2006,
+            2007,
+            2008,
+            2009,
+            2010,
+            2011,
+            2012,
+            2013,
+            2014,
+            2015,
+            2016
+          ],
+          "footer": [
+            "LTA",
+            "162",
+            "178",
+            "162",
+            "150",
+            "154",
+            "151",
+            "158",
+            "161",
+            "156",
+            "161",
+            "152",
+            "158",
+            "1909"
+          ],
+          "header": [
+            "",
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+            ""
+          ],
+          "last_column": [
+            1966,
+            1842,
+            2098,
+            1838,
+            1809,
+            1785,
+            1977,
+            2044,
+            2113,
+            1826,
+            1741,
+            2191,
+            1820,
+            1813,
+            1927,
+            1868,
+            2098,
+            1728,
+            1687,
+            2176,
+            2334,
+            1609,
+            1639
+          ],
+          "type": "lta_summary",
+          "use_horizontal_lines": true,
+          "values": [
+            [
+              184,
+              206,
+              236,
+              82,
+              136,
+              108,
+              144,
+              130,
+              231,
+              237,
+              155,
+              117
+            ],
+            [
+              248,
+              245,
+              173,
+              64,
+              193,
+              206,
+              100,
+              116,
+              197,
+              99,
+              98,
+              103
+            ],
+            [
+              189,
+              213,
+              125,
+              100,
+              209,
+              213,
+              221,
+              203,
+              81,
+              218,
+              152,
+              174
+            ],
+            [
+              146,
+              247,
+              142,
+              138,
+              167,
+              225,
+              178,
+              200,
+              97,
+              88,
+              72,
+              138
+            ],
+            [
+              146,
+              148,
+              218,
+              212,
+              125,
+              183,
+              186,
+              83,
+              113,
+              115,
+              70,
+              210
+            ],
+            [
+              157,
+              188,
+              86,
+              174,
+              78,
+              202,
+              95,
+              214,
+              189,
+              176,
+              85,
+              141
+            ],
+            [
+              191,
+              227,
+              177,
+              246,
+              118,
+              152,
+              121,
+              86,
+              76,
+              198,
+              244,
+              141
+            ],
+            [
+              81,
+              210,
+              225,
+              133,
+              230,
+              153,
+              132,
+              180,
+              126,
+              181,
+              146,
+              247
+            ],
+            [
+              184,
+              152,
+              184,
+              75,
+              151,
+              232,
+              216,
+              192,
+              249,
+              173,
+              151,
+              154
+            ],
+            [
+              205,
+              69,
+              186,
+              98,
+              205,
+              102,
+              120,
+              229,
+              149,
+              105,
+              178,
+              180
+            ],
+            [
+              74,
+              159,
+              65,
+              194,
+              84,
+              115,
+              137,
+              223,
+              132,
+              237,
+              100,
+              221
+            ],
+            [
+              143,
+              236,
+              164,
+              100,
+              130,
+              179,
+              223,
+              187,
+              204,
+              191,
+              221,
+              213
+            ],
+            [
+              146,
+              229,
+              64,
+              235,
+              107,
+              99,
+              115,
+              170,
+              211,
+              99,
+              231,
+              114
+            ],
+            [
+              208,
+              117,
+              71,
+              107,
+              64,
+              163,
+              189,
+              164,
+              230,
+              185,
+              249,
+              66
+            ],
+            [
+              148,
+              127,
+              192,
+              200,
+              128,
+              121,
+              184,
+              174,
+              129,
+              121,
+              219,
+              184
+            ],
+            [
+              143,
+              171,
+              111,
+              165,
+              81,
+              86,
+              241,
+              117,
+              92,
+              227,
+              217,
+              217
+            ],
+            [
+              247,
+              131,
+              221,
+              234,
+              215,
+              100,
+              199,
+              189,
+              190,
+              165,
+              91,
+              116
+            ],
+            [
+              167,
+              186,
+              175,
+              168,
+              126,
+              81,
+              130,
+              99,
+              116,
+              69,
+              196,
+              215
+            ],
+            [
+              67,
+              200,
+              191,
+              149,
+              241,
+              88,
+              105,
+              123,
+              128,
+              162,
+              127,
+              106
+            ],
+            [
+              160,
+              179,
+              240,
+              246,
+              235,
+              209,
+              64,
+              147,
+              175,
+              218,
+              166,
+              137
+            ],
+            [
+              218,
+              155,
+              174,
+              131,
+              245,
+              217,
+              235,
+              217,
+              179,
+              237,
+              98,
+              228
+            ],
+            [
+              142,
+              181,
+              232,
+              62,
+              98,
+              144,
+              123,
+              65,
+              241,
+              130,
+              79,
+              112
+            ],
+            [
+              152,
+              139,
+              87,
+              143,
+              197,
+              102,
+              184,
+              199,
+              73,
+              78,
+              164,
+              121
+            ]
+          ]
+        }
+      }
+    ],
+    [
+      {
+        "title": "Mode of Use"
+      },
+      {
+        "paragraph": "Solar resource, air temperature, photovoltaic power production (PVOUT) data and maps available in the Atlas serve as an indicator, which helps to understand solar power potential in Morocco, thus it is a useful tool for site selection and preliminary evaluation. PVOUT represents solar power estimate in the start-up phase of a PV system. The estimates are accurate enough for small and medium-size PV systems with pannels oriented to the south at optimum angle which is indicated in the GTI configuration. For planning and financing of large projects, more information is needed: 1. Detailed specification of a PV system, 2. PV simulation based on multiyear historical time series or at least TMY data, 3. Interannual variability and P90 uncertainty of the PV production, 4. Lifetime energy production considering performance degradation of PV components. More information about full PV yield assessment can be found at https://solaratlas.masen.ma/about#how-to-use."
+      }
+    ],
+    [
+      {
+        "title": "Disclaimer and legal information"
+      },
+      {
+        "paragraph": "Considering the uncertainty of data and calculations, Solargis does not guarantee the accuracy of estimates. The maximum possible has been done for the assessment of weather parameters based on the best available data, software and knowledge. Solargis nor MASEN shall not be liable for any direct, incidental, consequential, indirect or punitive damages arising or alleged to have arisen out of use of the provided report. This report is copyright to Solargis. All rights reserved."
+      }
+    ],
+    [
+      {
+        "title": "Data Uncertainty"
+      },
+      {
+        "paragraph": "In Morocco, the uncertainty of the yearly outputs of the original Solargis model is as follows: Global Horizontal Irradiation ±4.0%, Direct Normal Irradiation ±9.0%, Global Tilted Irradiation ±5.0%. Uncertainty of yearly air temperature for the majority of analysed ground stations is estimated at ±1.0ºC. However the uncertainty of air temperature can reach values as high as _4.0ºC in a complex terrain, such as the foothills of High Atlas Mountains. Uncertainty of yearly expected photovoltaic power production data is approx. ±6.5%. More information about the data uncertainty can be found at https://solaratlas.masen.ma/about#solargis_data."
+      }
+    ]
+  ],
+  "cover": {
+    "report_title": "Solargis PVplanner report"
+  },
+  "header": {
+    "logo_filepath": "pics/Solargis-noR-RGB.png",
+    "report_type": "PVplanner"
+  },
+  "settings": {
+    "font": "Roboto",
+    "font_path": "/usr/share/fonts/truetype/roboto/",
+    "include_contents": true,
+    "include_cover": true,
+    "language": "english",
+    "table": {
+      "color_footer": "EFEFEF",
+      "color_header": "EFEFEF",
+      "value_color_ramp": [
+        "3A52bA",
+        "62B0C3"
+      ]
+    }
+  },
+  "templates": {
+    "cover": "templates/cover.tex",
+    "header": "templates/header.tex",
+    "image": "templates/image.tex",
+    "paragraph": "templates/paragraph.tex",
+    "report": "templates/report.tex",
+    "table": "templates/table.tex",
+    "title": "templates/chapter_title.tex"
+  }
+}
