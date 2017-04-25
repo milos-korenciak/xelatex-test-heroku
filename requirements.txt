@@ -4,3 +4,4 @@ peewee  # ORM
 psycopg2  # core DB engine for peewee
 jinja2  # for .tex creation templates
 numpy  # for .tex creation templates
+requests  # for fetching data from other sub-micro-services
