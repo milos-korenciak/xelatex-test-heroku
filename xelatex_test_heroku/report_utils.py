@@ -562,7 +562,7 @@ def sefely_update_dict(orig_dict, new_dict):
     :return: dict
     """
     return_dict = orig_dict.copy()
-    for key, val in new_dict.iteritems():
+    for key, val in new_dict.items():
         if isinstance(val, collections.Mapping):
             tmp = sefely_update_dict(return_dict.get(key, {}), val)
             return_dict[key] = tmp
@@ -576,7 +576,7 @@ def sefely_update_dict(orig_dict, new_dict):
 def update_custom_image_type(configuration_dict, chapters_dict, settings_key, image_key, type_key, image_types_key, custom_type_key):
     map_types = configuration_dict.get(image_types_key, {})
     wms_settings = configuration_dict.get(settings_key, {}).get(custom_type_key, {})
-    for k, v in map_types.iteritems():
+    for k, v in map_types.items():
         map_types[k] = sefely_update_dict(wms_settings, map_types[k])
     for i in range(0, len(chapters_dict)):
         for j in range(0, len(chapters_dict[i])):
@@ -597,7 +597,7 @@ def listify_dict_values(dict_like):
     :return: adjusted dictionary
     """
     if type(dict_like) == dict:
-        for key, val in dict_like.iteritems():
+        for key, val in dict_like.items():
             dict_like[key] = listify_dict_values(dict_like.get(key, {}))
     elif type(dict_like) == list:
         for i in range(0, len(dict_like)):

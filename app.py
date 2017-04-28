@@ -57,7 +57,7 @@ def serve_tex2pdf():
     task.save()
     process_tex_raw_to_pdf_raw(task)
     data = task.pdf_raw  # this is dictionary "filename":"filecontent"
-    for k in data.iterkeys():
+    for k in data.keys():
         if k.endswith(".pdf"):
             bottle.response.content_type = "application/pdf"
             return data[k]  # return filecontent of the first .pdf found
@@ -114,7 +114,7 @@ def serve_tex2pdf_rich():
     task.save()
     process_tex_raw_to_pdf_raw(task)
     data = task.pdf_raw  # this is dictionary "filename":"filecontent"
-    for k in data.iterkeys():
+    for k in data.keys():
         if k.endswith(".pdf"):
             bottle.response.content_type = "application/pdf"
             return data[k]  # return filecontent of the first .pdf found

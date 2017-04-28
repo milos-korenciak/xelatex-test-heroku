@@ -330,7 +330,7 @@ class ReportComposer(object):
         logger.debug("Applying table types configuration...")
         table_types = self.configuration.get(table_types_key, {})
         table_settings = self.configuration.get(settings_key, {}).get(table_key, {})
-        for k, v in table_types.iteritems():
+        for k, v in table_types.items():
             table_types[k] = report_utils.sefely_update_dict(table_settings, table_types[k])
         for i in range(0, len(report_json[chapters_key])):
             for j in range(0, len(report_json[chapters_key][i])):
@@ -359,7 +359,7 @@ class ReportComposer(object):
 
         # map_types = self.configuration.get(map_types_key, {})
         # wms_settings = self.configuration.get(settings_key, {}).get(wms_map_key, {})
-        # for k, v in map_types.iteritems():
+        # for k, v in map_types.items():
         #     map_types[k] = report_utils.sefely_update_dict(wms_settings, map_types[k])
         # for i in range(0, len(report_json[chapters_key])):
         #     for j in range(0, len(report_json[chapters_key][i])):

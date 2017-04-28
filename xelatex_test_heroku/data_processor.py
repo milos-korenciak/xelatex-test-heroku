@@ -18,7 +18,7 @@ logger.setLevel('DEBUG')
 
 def save_url_file(url, file_path, url_params={}, timeout=60):
     logger.debug("Making GET request to URL '{0}' with parameters '{1}' and timeout {2} seconds...".format(url, url_params, timeout))
-    for k, v in url_params.iteritems():
+    for k, v in url_params.items():
         if isinstance(v, (list, tuple)):
             url_params[k] = ",".join(map(str, v))
     response = requests.get(url, params=url_params, timeout=timeout, stream=True)
