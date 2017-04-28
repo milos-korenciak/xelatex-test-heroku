@@ -7,8 +7,8 @@ from __future__ import print_function  # Python 2 vs. 3 compatibility --> use pr
 from __future__ import division  # Python 2 vs. 3 compatibility --> / returns float
 from __future__ import unicode_literals  # Python 2 vs. 3 compatibility --> / returns float
 from __future__ import absolute_import  # Python 2 vs. 3 compatibility --> absolute imports
-from processing import *
-import db
+from xelatex_test_heroku.processing import *
+from xelatex_test_heroku import db
 import time
 
 

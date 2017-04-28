@@ -3,6 +3,12 @@ Read about logign at http://docs.python.org/library/logging.html
 
 See examples of using this module in module ./basic_logger_example.py
 '''
+
+from __future__ import print_function  # Python 2 vs. 3 compatibility --> use print()
+from __future__ import division  # Python 2 vs. 3 compatibility --> / returns float
+from __future__ import unicode_literals  # Python 2 vs. 3 compatibility --> / returns float
+from __future__ import absolute_import  # Python 2 vs. 3 compatibility --> absolute imports
+
 import logging
 import sys
 

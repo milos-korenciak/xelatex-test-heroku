@@ -9,10 +9,9 @@ from __future__ import print_function  # Python 2 vs. 3 compatibility --> use pr
 from __future__ import division  # Python 2 vs. 3 compatibility --> / returns float
 from __future__ import unicode_literals  # Python 2 vs. 3 compatibility --> / returns float
 from __future__ import absolute_import  # Python 2 vs. 3 compatibility --> absolute imports
-import db
+from . import db
 import io
 import os
-import pickle
 import tempfile
 import shutil
 import subprocess
@@ -73,8 +72,8 @@ def process_tex_raw_to_pdf_raw(task, tempdir=None):
 
     print("I have tempdir: ", tempdir)
     tex_name = ""
-    data = pickle.loads(task.tex_raw)
-    for file_name, file_content in data.iteritems():
+    data = task.tex_raw  # loads dict of {(file_name, file_content), sss}
+    for file_name, file_content in data.items():
         with io.open(file_name, "wb") as fI:
             fI.write(file_content)
         if file_name.endswith(".tex"):
@@ -99,7 +98,7 @@ def process_tex_raw_to_pdf_raw(task, tempdir=None):
         print("a, b, c", a, b, c)
 
     output_pdf_name = tex_name[:-4] + ".pdf"
-    task.pdf_raw = pickle.dumps({output_pdf_name: io.open(os.path.join(tempdir, output_pdf_name), "rb").read()})
+    task.pdf_raw = {output_pdf_name: io.open(os.path.join(tempdir, output_pdf_name), "rb").read()}
     task.state = db.PDF_RAW
     task.save()
 

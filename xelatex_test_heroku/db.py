@@ -9,7 +9,7 @@ from __future__ import division  # Python 2 vs. 3 compatibility --> / returns fl
 from __future__ import unicode_literals  # Python 2 vs. 3 compatibility --> / returns float
 from __future__ import absolute_import  # Python 2 vs. 3 compatibility --> absolute imports
 from playhouse.db_url import connect  # we need this to be exposed from the module
-from playhouse.fields import CompressedField
+from playhouse.fields import PickledField
 import datetime
 import os
 import peewee as pw
@@ -50,11 +50,11 @@ class PdfCreation(DBModel):
     pdf_creation_id = pw.PrimaryKeyField()
     # user_id = pw.ForeignKeyField(InternalUser, null=True)
     datetime_ = pw.DateTimeField(index=True, default=datetime.datetime.now)
-    request_raw = CompressedField(null=True, default=None)
-    request_2nd_level = CompressedField(null=True, default=None)
-    tex_raw = CompressedField(null=True, default=None)
-    pdf_raw = CompressedField(null=True, default=None)
-    pdf_signed = CompressedField(null=True, default=None)
+    request_raw = PickledField(null=True, default=None)
+    request_2nd_level = PickledField(null=True, default=None)
+    tex_raw = PickledField(null=True, default=None)
+    pdf_raw = PickledField(null=True, default=None)
+    pdf_signed = PickledField(null=True, default=None)
     state = pw.SmallIntegerField(index=True, default=REQUEST_RAW)  # see state constants at the beginning of the file
     locked_timestamp = pw.DateTimeField(index=True, null=True, default=datetime.datetime(1980,1,1))
 

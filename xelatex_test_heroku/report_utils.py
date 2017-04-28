@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+from __future__ import print_function  # Python 2 vs. 3 compatibility --> use print()
+from __future__ import division  # Python 2 vs. 3 compatibility --> / returns float
+from __future__ import unicode_literals  # Python 2 vs. 3 compatibility --> / returns float
+from __future__ import absolute_import  # Python 2 vs. 3 compatibility --> absolute imports
 
 from jinja2 import Template
 import json
@@ -7,7 +11,7 @@ import numpy as np
 import uuid
 import collections
 
-setting_string = '''
+setting_string = r'''
 \documentclass[11pt,a4paper]{article}
 \\usepackage[a4paper]{geometry}
 \\usepackage{array}
@@ -23,8 +27,8 @@ setting_string = '''
 \\usepackage{grffile} % to manage fancy characters in figure file names (i.e., underscores)
 
 % polyglossia stuff:
-\usepackage{fontspec}
-\usepackage{polyglossia}
+\\usepackage{fontspec}
+\\usepackage{polyglossia}
 \setmainlanguage{english}
 {% if secondary_language == "arabic" %}
 \setotherlanguage{arabic}
@@ -106,8 +110,8 @@ report_string = '''
 \\usepackage{grffile} % to manage fancy characters in figure file names (i.e., underscores)
 
 % polyglossia stuff:
-\usepackage{fontspec}
-\usepackage{polyglossia}
+\\usepackage{fontspec}
+\\usepackage{polyglossia}
 \setmainlanguage{english}
 {% if secondary_language == "arabic" %}
 \setotherlanguage{arabic}
@@ -302,8 +306,10 @@ def get_general_table(table_string=None, caption=None, header=None, values=None,
     nr_cols = 0
     if header is not None:
         nr_cols = len(header[0])
+        # print( nr_cols)
     elif footer is not None:
         nr_cols = len(footer)
+        # print( nr_cols)
     elif values is not None:
         if values.__class__ == np.ndarray:
             nr_cols = values.shape[1]
@@ -315,9 +321,10 @@ def get_general_table(table_string=None, caption=None, header=None, values=None,
             nr_cols += 1
     columns = ''
     # positions = ''
+    # print( column_widths, nr_cols)
     for i in range(0, nr_cols):
         if column_widths:
-            # print nr_cols, i
+            # print( nr_cols, i)
             columns += 'p{' + str(column_widths[i]) + 'cm}'
         else:
             columns += 'l'
@@ -331,19 +338,19 @@ def get_general_table(table_string=None, caption=None, header=None, values=None,
             values_shape = (len(values), len(values[0]))
         color_values = np.chararray(values_shape, itemsize=6)
         if apply_value_colors and value_color_ramp:
-            # print values
+            # print( values)
             min_value = np.nanmin(values)
             max_value = np.nanmax(values)
             thresholds = np.linspace(min_value, max_value, num=len(value_color_ramp) + 1)
 
-            # print color_values
-            # print values.max()
+            # print( color_values)
+            # print( values.max())
             for i in range(0, len(value_color_ramp)):
                 color_values[np.greater_equal(values, thresholds[i])] = value_color_ramp[i]
         else:
             color_values[:] = 'FFFFFF'
 
-            # print color_values
+            # print( color_values)
     else:
         color_values = None
         values_shape = (0, 0)
@@ -518,9 +525,9 @@ def parse_json_like(json_to_parse, json_param_name=None, class_name=None):
     if type(json_to_parse) is str or type(json_to_parse) is unicode:
         if os.path.isfile(json_to_parse):
             with open(json_to_parse) as file_obj:
-                # print json_to_parse
+                # print( json_to_parse)
                 json_to_parse = file_obj.read()
-                # print json_to_parse, json_to_parse.__class__
+                # print( json_to_parse, json_to_parse.__class__)
         try:
             json_dict = json.loads(json_to_parse)
         except ValueError:
@@ -544,8 +551,7 @@ def parse_property_file(property_file, property_separator='='):
     # if os.path.isfile(property_file):
     #     with open(property_file) as file_obj:
     #         property_file = file_obj.read()
-    return dict(line.strip().split(property_separator, maxsplit=1) for line in open(property_file) if
-                not line.startswith('#') and not line.startswith('\n'))
+    return dict(line.strip().split(property_separator, maxsplit=1) for line in open(property_file) if not line.startswith('#') and not line.startswith('\n'))
 
 
 def sefely_update_dict(orig_dict, new_dict):
@@ -555,15 +561,33 @@ def sefely_update_dict(orig_dict, new_dict):
     :param new_dict: dict
     :return: dict
     """
+    return_dict = orig_dict.copy()
     for key, val in new_dict.iteritems():
         if isinstance(val, collections.Mapping):
-            tmp = sefely_update_dict(orig_dict.get(key, {}), val)
-            orig_dict[key] = tmp
+            tmp = sefely_update_dict(return_dict.get(key, {}), val)
+            return_dict[key] = tmp
         # elif isinstance(val, list):  # TODO: do we want alse list appending?
         #     orig_dict[key] = (orig_dict.get(key, []) + val)
         else:
-            orig_dict[key] = new_dict[key]
-    return orig_dict
+            return_dict[key] = new_dict[key]
+    return return_dict
+
+
+def update_custom_image_type(configuration_dict, chapters_dict, settings_key, image_key, type_key, image_types_key, custom_type_key):
+    map_types = configuration_dict.get(image_types_key, {})
+    wms_settings = configuration_dict.get(settings_key, {}).get(custom_type_key, {})
+    for k, v in map_types.iteritems():
+        map_types[k] = sefely_update_dict(wms_settings, map_types[k])
+    for i in range(0, len(chapters_dict)):
+        for j in range(0, len(chapters_dict[i])):
+            if image_key == chapters_dict[i][j].keys()[0]:  # to check if the chapter item is an image
+                if custom_type_key in chapters_dict[i][j][image_key].keys():
+                    map_type = chapters_dict[i][j][image_key][custom_type_key].get(type_key, None)
+                    if map_type and map_type in map_types.keys():
+                        # print( chapters_dict[i][j][image_key][map_key])
+                        chapters_dict[i][j][image_key][custom_type_key] = sefely_update_dict(map_types[map_type], chapters_dict[i][j][image_key][custom_type_key])
+                        # print( chapters_dict[i][j][image_key][map_key])
+    return chapters_dict
 
 
 def listify_dict_values(dict_like):
@@ -581,7 +605,7 @@ def listify_dict_values(dict_like):
             dict_like[i] = listify_dict_values(dict_like[i])
     elif (type(dict_like) == str or type(dict_like) == unicode) and dict_like.startswith('[') \
             and dict_like.endswith(']'):
-        # print dict_like
+        # print( dict_like)
         try:
             dict_like = eval(dict_like)
         except:
@@ -619,7 +643,7 @@ def get_string_from_template(file_path=None, template_key=None):
 
 
 def make_error_response(status_code, user_message, exception_obj):
-    # print type(exception_obj), str(exception_obj)
+    # print( type(exception_obj), str(exception_obj))
     return json.dumps({"status_code": status_code,
                        "message": user_message,
                        "detailed_message": "%s: %s" % (type(exception_obj).__name__, exception_obj)})
@@ -672,10 +696,10 @@ L1Jvb3QgNyAwIFIKICAgL0luZm8gNiAwIFIKPj4Kc3RhcnR4cmVmCjk0OQolJUVPRgo='''
     json_string = json.dumps(
         {'logo_filepath': logo_path, 'font_name': font, 'report_title': report_title, 'chapter_title': chapter_title,
          'arabic_script': arabic_string, 'secondary_language': report_language})
-    print json_string
+    print( json_string)
     insets = json.loads(json_string)
-    print insets
-    print '* * *'
+    print( insets)
+    print( '* * *')
 
     out_dir = os.path.dirname(os.path.abspath(output_latex_file))
     # insets = dict(logo_filepath=logo_path, font_name=font, report_title=report_title, chapter_title=chapter_title)
@@ -684,23 +708,23 @@ L1Jvb3QgNyAwIFIKICAgL0luZm8gNiAwIFIKPj4Kc3RhcnR4cmVmCjk0OQolJUVPRgo='''
     # # for latex_templ_file in partial_templates:
     # #     with open(latex_templ_file, 'r') as f:
     # #         latex_templ = f.read()
-    # #     # print latex_templ
+    # #     # print( latex_templ)
     # for latex_templ in partial_templates:
     #     latex_template = Template(latex_templ)
     #     latex_src += latex_template.render(**insets) + '\n'
     # # latex_src += '\end{document}'
-    # print latex_src
+    # print( latex_src)
     table_caption = 'Sample table'
     table_header = ['January', 'February', 'March', 'April', 'May']
     row_values = np.random.randint(1000, 2000, (13, 5))
-    print row_values
-    # print row_values[0]
+    print( row_values)
+    # print( row_values[0])
     footer_row = np.sum(row_values, axis=0)
     first_column = np.arange(start=1994, stop=1994 + row_values.shape[0], step=1)
     # first_column = None
     last_column = np.sum(row_values, axis=1)
     # last_column = None
-    print first_column
+    print( first_column)
     if first_column is not None:
         table_header = ['Year'] + table_header
         footer_row = ['Sum'] + list(footer_row)
@@ -750,9 +774,9 @@ L1Jvb3QgNyAwIFIKICAgL0luZm8gNiAwIFIKPj4Kc3RhcnR4cmVmCjk0OQolJUVPRgo='''
                        has_cover=include_title_page, secondary_language=report_language, font_name=font)
     # report_dict.update(insets)
     latex_src = Template(report_string).render(**report_dict)
-    print '* * *'
-    print latex_src
-    print '* * *'
+    print( '* * *')
+    print( latex_src)
+    print( '* * *')
 
     with open(output_latex_file, 'w') as f:
         f.write(latex_src.encode('utf8'))

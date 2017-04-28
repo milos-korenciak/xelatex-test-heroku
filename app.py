@@ -9,19 +9,22 @@ from __future__ import print_function  # Python 2 vs. 3 compatibility --> use pr
 from __future__ import division  # Python 2 vs. 3 compatibility --> / returns float
 from __future__ import unicode_literals  # Python 2 vs. 3 compatibility --> / returns float
 from __future__ import absolute_import  # Python 2 vs. 3 compatibility --> absolute imports
-from processing import *
-import bottle
+
 import datetime
 import os
-import pickle
 import subprocess
+import traceback
 
+import bottle
+
+from xelatex_test_heroku.processing import *
+from xelatex_test_heroku import report_core, report_utils, processing, db, data_processor, basic_logger
 
 app = bottle.default_app()  # bottle WSGI app object
 
 
 ### WEB handlers
-@bottle.get("/")
+@bottle.post("/")
 def get_index():
     # serve static webpage with JS
     print(os.environ)
@@ -32,21 +35,28 @@ def get_index():
     return bottle.static_file("brano2017-02-09_buildpack.pdf", root='.')
 
 
-@bottle.post("/")
+@bottle.get("/")
 def process_request():
-    return "You probably wanted to call /now/tex2pdf or /now/tex2pdf_rich or /enlist/tex2pdf"
+    return """You probably wanted to call /now/tex2pdf or /now/tex2pdf_rich or /enlist/tex2pdf
+    OR
+    Make a POST request with valid JSON to '/composer' or '/templator'!"""
+
+
+@bottle.get("/now/tex2pdf")
+def serve_tex2pdf_get():
+    return "This endpoint supports just POST."
 
 
 @bottle.post("/now/tex2pdf")
 def serve_tex2pdf():
     """Immediately try to compile .tex --> .pdf"""
     task = db.PdfCreation()
-    task.tex_raw = pickle.dumps({"sample.tex": bottle.request.body.read()})
+    task.tex_raw = {"sample.tex": bottle.request.body.read()}
     task.locked_timestamp = datetime.datetime.now()
     task.state = db.TEX_RAW
     task.save()
     process_tex_raw_to_pdf_raw(task)
-    data = pickle.loads(task.pdf_raw)  # this is dictionary "filename":"filecontent"
+    data = task.pdf_raw  # this is dictionary "filename":"filecontent"
     for k in data.iterkeys():
         if k.endswith(".pdf"):
             bottle.response.content_type = "application/pdf"
@@ -97,13 +107,13 @@ def serve_tex2pdf_rich():
     """Enlist .tex for worker compilation to .pdf and signing"""
     task = db.PdfCreation()
     files = bottle.request.files
-    data = {v.raw_filename: v.file.read() for v in files.values()}
-    task.tex_raw = pickle.dumps(data)
+    task.tex_raw = {v.raw_filename: v.file.read() for v in files.values()}
+    print("data in field", type(task.tex_raw))
     task.locked_timestamp = datetime.datetime.now()
     task.state = db.TEX_RAW
     task.save()
     process_tex_raw_to_pdf_raw(task)
-    data = pickle.loads(task.pdf_raw)  # this is dictionary "filename":"filecontent"
+    data = task.pdf_raw  # this is dictionary "filename":"filecontent"
     for k in data.iterkeys():
         if k.endswith(".pdf"):
             bottle.response.content_type = "application/pdf"
@@ -130,8 +140,7 @@ def enlist_tex2pdf():
     """Enlist .tex for worker compilation to .pdf and signing"""
     task = db.PdfCreation()
     files = bottle.request.files
-    data = {v.raw_filename: v.file.read() for v in files.values()}
-    task.tex_raw = pickle.dumps(data)
+    task.tex_raw = {v.raw_filename: v.file.read() for v in files.values()}
     task.state = db.TEX_RAW
     task.save()
     return "Task id {} accepted".format(task.pdf_creation_id)
@@ -153,6 +162,61 @@ def static_files(filename):
     if not filename.startswith("jquery"):
         return ""
     return bottle.static_file(filename, root='.')
+
+
+@bottle.get("/composer")
+def composer_get(self):
+    return 'Make a POST request with valid report composer JSON!'
+
+
+@bottle.post("/composer")
+def composer_post(self):
+
+    valid_outputs = ['json', 'pdf', 'latex', 'config']
+    raw_input = bottle.request.body.read()
+    output = bottle.request.get("output", "json")  # get "?output" param
+    try:
+        composer_obj = report_core.ReportComposer(request_json=raw_input)
+        if output == 'json':
+            return composer_obj.to_json_unicode()
+        elif output == 'config':
+            return composer_obj.configuration_to_unicode()
+        elif output == 'latex':
+            return composer_obj.to_latex()
+        elif output == 'pdf':
+            bottle.response.headers['Content-Type'] = "application/pdf"
+            return composer_obj.to_pdf(remove_temp=False)
+        else:
+            return "Valid 'output' parameter is one of {}!".format(valid_outputs)
+    except Exception as e:
+        error_status = "500 - Internal Server Error"
+        bottle.response.status = error_status
+        # error_response = report_utils.make_error_response(error_status, "Something went wrong, see the error message:", e)
+        # return error_response + '\n'
+        return "Something went wrong, see the traceback message:\n{}".format(traceback.format_exc())
+
+
+@bottle.get("/templator")
+def templator_get(self):
+    return 'Make a POST request with valid report templator JSON!'
+
+
+@bottle.post("/templator")
+def POST(self, output='pdf'):
+    valid_outputs = ['pdf', 'latex']
+    raw_input = bottle.request.body.read()
+    try:
+        composer_obj = report_core.ReportTemplator(report_json=raw_input)
+        if output == 'latex':
+            return composer_obj.to_latex()
+        elif output == 'pdf':
+            bottle.response.headers['Content-Type'] = "application/pdf"
+            return composer_obj.to_pdf()
+        else:
+            return "Valid 'output' parameter is one of {}!".format(valid_outputs)
+    except Exception as e:
+        bottle.response.status = "500 - Internal Server Error"
+        return "Something went wrong, see the traceback message:\n{}".format(traceback.format_exc())
 
 
 if __name__ == '__main__':
